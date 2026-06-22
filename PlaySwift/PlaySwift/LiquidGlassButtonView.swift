@@ -151,6 +151,34 @@ private extension GlassButtonExample {
             .buttonStyle(.glassProminent)
         },
         GlassButtonExample(
+            title: "Confirm Glass",
+            summary: "A glass button using the confirm role for positive confirmation actions.",
+            code: """
+            Button("Confirm", role: .confirm) {
+                // Confirm the user's choice.
+            }
+            .buttonStyle(.glassProminent)
+            """
+        ) {
+            Button("Confirm", role: .confirm) {
+            }
+            .buttonStyle(.glassProminent)
+        },
+        GlassButtonExample(
+            title: "Destructive Glass",
+            summary: "A prominent glass button using the destructive role for delete or discard actions.",
+            code: """
+            Button("Delete", role: .destructive) {
+                // Delete the item.
+            }
+            .buttonStyle(.glassProminent)
+            """
+        ) {
+            Button("Delete", role: .destructive) {
+            }
+            .buttonStyle(.glassProminent)
+        },
+        GlassButtonExample(
             title: "Tinted Glass",
             summary: "A glass button tinted with a semantic colour.",
             code: """
@@ -199,6 +227,22 @@ private extension GlassButtonExample {
                 Image(systemName: "heart.fill")
             }
             .buttonStyle(.glass)
+        },
+        GlassButtonExample(
+            title: "Disabled Glass",
+            summary: "The standard disabled state for a glass button.",
+            code: """
+            Button("Unavailable") {
+                // This action is currently unavailable.
+            }
+            .buttonStyle(.glass)
+            .disabled(true)
+            """
+        ) {
+            Button("Unavailable") {
+            }
+            .buttonStyle(.glass)
+            .disabled(true)
         }
     ]
 }
