@@ -5,7 +5,7 @@ import UIKit
 import AppKit
 #endif
 
-struct GlassButtonView: View {
+struct LiquidGlassButtonView: View {
     private let examples = GlassButtonExample.examples
 
     var body: some View {
@@ -16,10 +16,10 @@ struct GlassButtonView: View {
                         .font(.subheadline.weight(.semibold))
                         .foregroundStyle(.blue)
 
-                    Text("Glass Buttons")
+                    Text("Liquid Glass Buttons")
                         .font(.largeTitle.weight(.bold))
 
-                    Text("Apple-provided glass button styles from SwiftUI. Expand each example to inspect and copy the source.")
+                    Text("Apple-provided Liquid Glass button styles from SwiftUI. Expand each example to inspect and copy the source.")
                         .foregroundStyle(.secondary)
                 }
                 .padding(.horizontal, 20)
@@ -31,7 +31,7 @@ struct GlassButtonView: View {
             .padding(.vertical, 20)
             .padding(.horizontal, 20)
         }
-        .navigationTitle("Glass Buttons")
+        .navigationTitle("Liquid Glass Buttons")
         .navigationBarTitleDisplayMode(.inline)
         .background(.background)
     }
@@ -217,6 +217,6 @@ private enum Clipboard {
 
 #Preview {
     NavigationStack {
-        GlassButtonView()
+        LiquidGlassButtonView()
     }
 }

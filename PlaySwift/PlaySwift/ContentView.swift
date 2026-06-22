@@ -142,8 +142,8 @@ private struct CatalogueDestinationView: View {
     var body: some View {
         // Items can either open a real demo or fall back to the generic placeholder detail page.
         switch item.demo {
-        case .buttons:
-            GlassButtonView()
+        case .liquidGlassButtons:
+            LiquidGlassButtonView()
         case .none:
             CatalogueDetailView(item: item)
         }
@@ -274,7 +274,7 @@ private struct CatalogueItem: Identifiable {
 }
 
 private enum CatalogueDemo {
-    case buttons
+    case liquidGlassButtons
 }
 
 private extension CatalogueSection {
@@ -284,12 +284,11 @@ private extension CatalogueSection {
             title: "Featured",
             items: [
                 CatalogueItem(
-                    title: "Glass Buttons",
+                    title: "Buttons that feel native",
                     category: "Components",
-                    summary: "Compare SwiftUI's Apple-provided glass button styles and copy sample code.",
+                    summary: "Compare prominent, bordered, destructive, menu-backed, and animated button styles.",
                     symbol: "button.programmable",
-                    colour: Color(hex: 0x007AFF),
-                    demo: .buttons
+                    colour: Color(hex: 0x007AFF)
                 ),
                 CatalogueItem(
                     title: "Maps-style bottom sheet",
@@ -363,11 +362,12 @@ private extension CatalogueSection {
             title: "iOS 26 Lab",
             items: [
                 CatalogueItem(
-                    title: "Liquid Glass buttons",
+                    title: "Liquid Glass Buttons",
                     category: "Liquid Glass",
-                    summary: "Collect experiments with the latest materials, controls, and glass-style affordances.",
+                    summary: "Compare SwiftUI's Apple-provided Liquid Glass button styles and copy sample code.",
                     symbol: "sparkles",
-                    colour: Color(hex: 0x007AFF)
+                    colour: Color(hex: 0x007AFF),
+                    demo: .liquidGlassButtons
                 ),
                 CatalogueItem(
                     title: "New navigation patterns",
