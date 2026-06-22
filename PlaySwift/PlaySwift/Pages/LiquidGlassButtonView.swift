@@ -5,7 +5,7 @@ struct LiquidGlassButtonView: View {
         id: "liquid-glass-buttons",
         title: "Liquid Glass Buttons",
         tags: ["Liquid Glass", "Buttons", "iOS 26"],
-        summary: "Button styles control appearance. Button roles describe the meaning of an action. Expand each example to inspect and copy the source.",
+        summary: "Compare iOS 26 Liquid Glass button decoration styles and copy the matching SwiftUI code.",
         symbol: "sparkles",
         colour: Color(hex: 0x007AFF),
         destination: .liquidGlassButtons
@@ -14,7 +14,7 @@ struct LiquidGlassButtonView: View {
     let isFavourite: Bool
     let toggleFavourite: () -> Void
 
-    private let sections = GlassButtonExampleSection.sections
+    private let examples = GlassButtonExample.examples
 
     var body: some View {
         CataloguePageContainer(
@@ -22,28 +22,7 @@ struct LiquidGlassButtonView: View {
             isFavourite: isFavourite,
             toggleFavourite: toggleFavourite
         ) {
-            ForEach(sections) { section in
-                GlassButtonExampleSectionView(section: section)
-            }
-        }
-    }
-}
-
-private struct GlassButtonExampleSectionView: View {
-    let section: GlassButtonExampleSection
-
-    var body: some View {
-        VStack(alignment: .leading, spacing: 18) {
-            VStack(alignment: .leading, spacing: 6) {
-                Text(section.title)
-                    .font(.title2.weight(.bold))
-
-                Text(section.summary)
-                    .font(.subheadline)
-                    .foregroundStyle(.secondary)
-            }
-
-            ForEach(section.examples) { example in
+            ForEach(examples) { example in
                 GlassButtonExampleView(example: example)
             }
         }
@@ -57,7 +36,7 @@ private struct GlassButtonExampleView: View {
         VStack(alignment: .leading, spacing: 14) {
             VStack(alignment: .leading, spacing: 6) {
                 Text(example.title)
-                    .font(.headline)
+                    .font(.title2.weight(.bold))
 
                 Text(example.summary)
                     .font(.subheadline)
@@ -80,13 +59,6 @@ private struct GlassButtonExampleView: View {
     }
 }
 
-private struct GlassButtonExampleSection: Identifiable {
-    let id = UUID()
-    let title: String
-    let summary: String
-    let examples: [GlassButtonExample]
-}
-
 private struct GlassButtonExample: Identifiable {
     let id = UUID()
     let title: String
@@ -107,23 +79,8 @@ private struct GlassButtonExample: Identifiable {
     }
 }
 
-private extension GlassButtonExampleSection {
-    static let sections: [GlassButtonExampleSection] = [
-        GlassButtonExampleSection(
-            title: "Styles",
-            summary: "Styles change how a button looks.",
-            examples: GlassButtonExample.styleExamples
-        ),
-        GlassButtonExampleSection(
-            title: "Roles",
-            summary: "Roles describe what an action means to the system.",
-            examples: GlassButtonExample.roleExamples
-        )
-    ]
-}
-
 private extension GlassButtonExample {
-    static let styleExamples: [GlassButtonExample] = [
+    static let examples: [GlassButtonExample] = [
         GlassButtonExample(
             title: "Glass",
             summary: "The default glass button style for standard actions.",
@@ -220,34 +177,4 @@ private extension GlassButtonExample {
         }
     ]
 
-    static let roleExamples: [GlassButtonExample] = [
-        GlassButtonExample(
-            title: "Confirm Role",
-            summary: "The confirm role marks a positive confirmation action.",
-            code: """
-            Button("Confirm", role: .confirm) {
-                // Confirm the user's choice.
-            }
-            .buttonStyle(.glassProminent)
-            """
-        ) {
-            Button("Confirm", role: .confirm) {
-            }
-            .buttonStyle(.glassProminent)
-        },
-        GlassButtonExample(
-            title: "Destructive Role",
-            summary: "The destructive role marks delete or discard actions.",
-            code: """
-            Button("Delete", role: .destructive) {
-                // Delete the item.
-            }
-            .buttonStyle(.glassProminent)
-            """
-        ) {
-            Button("Delete", role: .destructive) {
-            }
-            .buttonStyle(.glassProminent)
-        }
-    ]
 }

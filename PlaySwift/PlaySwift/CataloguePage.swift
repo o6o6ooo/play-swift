@@ -24,6 +24,7 @@ enum CatalogueDestination {
     case navigationBasics
     case tabNavigationBasics
     case stateAndBinding
+    case buttonBasics
     case buttons
     case mapsBottomSheet
     case matchedGeometryCards
@@ -64,6 +65,7 @@ extension CatalogueSection {
             id: "components",
             title: "Components",
             pages: [
+                ButtonBasicsView.metadata,
                 TogglesAndSwitchesView.metadata,
                 PickersAndMenusView.metadata,
                 ListsFormsAndRowsView.metadata
