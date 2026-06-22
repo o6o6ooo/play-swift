@@ -310,9 +310,3 @@ private enum Clipboard {
         #endif
     }
 }
-
-#Preview {
-    NavigationStack {
-        LiquidGlassButtonView(isFavourite: false, toggleFavourite: {})
-    }
-}

@@ -459,7 +459,3 @@ private extension Color {
         )
     }
 }
-
-#Preview {
-    ContentView()
-}
