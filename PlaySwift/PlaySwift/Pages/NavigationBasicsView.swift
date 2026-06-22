@@ -176,9 +176,9 @@ private struct NavigationConceptRow: View {
     var body: some View {
         HStack(alignment: .top, spacing: 10) {
             Circle()
-                .fill(.secondary)
+                .fill(.primary)
                 .frame(width: 5, height: 5)
-                .padding(.top, 8)
+                .padding(.top, 6)
 
             VStack(alignment: .leading, spacing: 4) {
                 Text(title)
@@ -273,42 +273,9 @@ private struct NavigationPreviewRow: View {
 
 private struct ValueNavigationPreview: View {
     var body: some View {
-        VStack(alignment: .leading, spacing: 12) {
-            VStack(alignment: .leading, spacing: 8) {
-                NavigationPreviewRow(title: "Stacks", symbol: "square.stack.3d.up")
-                NavigationPreviewRow(title: "Navigation", symbol: "point.topleft.down.curvedto.point.bottomright.up")
-            }
-
-            HStack(spacing: 10) {
-                NavigationValuePill("Lesson")
-
-                Image(systemName: "arrow.right")
-                    .font(.caption.weight(.bold))
-                    .foregroundStyle(.secondary)
-
-                NavigationValuePill("LessonDetailView")
-            }
-
-            Text("The row passes a Lesson value into LessonDetailView.")
-                .font(.caption)
-                .foregroundStyle(.secondary)
+        VStack(alignment: .leading, spacing: 8) {
+            NavigationPreviewRow(title: "Stacks", symbol: "square.stack.3d.up")
+            NavigationPreviewRow(title: "Navigation", symbol: "point.topleft.down.curvedto.point.bottomright.up")
         }
-    }
-}
-
-private struct NavigationValuePill: View {
-    let title: String
-
-    init(_ title: String) {
-        self.title = title
-    }
-
-    var body: some View {
-        Text(title)
-            .font(.caption.weight(.semibold))
-            .foregroundStyle(.white)
-            .padding(.horizontal, 12)
-            .padding(.vertical, 9)
-            .background(Color(hex: 0x5856D6).gradient, in: Capsule())
     }
 }
