@@ -80,11 +80,11 @@ private struct PageIcon: View {
                 )
 
             Image(systemName: page.symbol)
-                .font(.system(size: 30, weight: .semibold))
+                .font(.system(size: 24, weight: .semibold))
                 .foregroundStyle(.white)
                 .shadow(color: .black.opacity(0.22), radius: 8, y: 4)
         }
-        .frame(width: 104, height: 104)
+        .frame(width: 72, height: 72)
         .clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
     }
 }

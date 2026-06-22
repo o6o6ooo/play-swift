@@ -195,9 +195,9 @@ private struct CatalogueCard: View {
                 .font(.headline)
                 .foregroundStyle(.primary)
                 .lineLimit(2)
-                .frame(width: 132, alignment: .leading)
+                .frame(width: 120, alignment: .leading)
         }
-        .frame(width: 132, alignment: .topLeading)
+        .frame(width: 120, alignment: .topLeading)
     }
 }
 
@@ -220,11 +220,11 @@ private struct ThumbnailView: View {
                 )
 
             Image(systemName: page.symbol)
-                .font(.system(size: 36, weight: .semibold))
+                .font(.system(size: 32, weight: .semibold))
                 .foregroundStyle(.white)
                 .shadow(color: .black.opacity(0.22), radius: 8, y: 4)
         }
-        .frame(width: 132, height: 132)
+        .frame(width: 120, height: 120)
         .clipShape(RoundedRectangle(cornerRadius: 18, style: .continuous))
     }
 }
