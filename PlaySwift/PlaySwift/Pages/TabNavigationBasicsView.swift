@@ -7,7 +7,7 @@ struct TabNavigationBasicsView: View {
         tags: ["Basic", "Navigation", "Tabs"],
         summary: "Learn how TabView switches between the main areas of an app, and how each tab can own its own NavigationStack.",
         symbol: "rectangle.bottomthird.inset.filled",
-        colour: Color(hex: 0x007AFF),
+        colour: Color(hex: 0xFFCC00),
         destination: .tabNavigationBasics
     )
 
