@@ -6,6 +6,9 @@ import AppKit
 #endif
 
 struct LiquidGlassButtonView: View {
+    let isFavourite: Bool
+    let toggleFavourite: () -> Void
+
     private let sections = GlassButtonExampleSection.sections
 
     var body: some View {
@@ -33,6 +36,9 @@ struct LiquidGlassButtonView: View {
         }
         .navigationTitle("Liquid Glass Buttons")
         .navigationBarTitleDisplayMode(.inline)
+        .toolbar {
+            FavouriteToolbarButton(isFavourite: isFavourite, action: toggleFavourite)
+        }
         .background(.background)
     }
 }
@@ -307,6 +313,6 @@ private enum Clipboard {
 
 #Preview {
     NavigationStack {
-        LiquidGlassButtonView()
+        LiquidGlassButtonView(isFavourite: false, toggleFavourite: {})
     }
 }

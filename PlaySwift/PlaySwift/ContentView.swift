@@ -4,20 +4,21 @@ struct ContentView: View {
     @State private var selectedTab = AppTab.discover
     // The search text lives at the root so the search tab and result list share one source of truth.
     @State private var searchText = ""
+    @State private var favouriteIDs: Set<CatalogueItem.ID> = []
 
     var body: some View {
         TabView(selection: $selectedTab) {
             Tab("Discover", systemImage: "square.grid.2x2.fill", value: AppTab.discover) {
-                DiscoverView()
+                DiscoverView(favouriteIDs: $favouriteIDs)
             }
 
             Tab("Favourites", systemImage: "bookmark.fill", value: AppTab.favourites) {
-                FavouritesView()
+                FavouritesView(favouriteIDs: $favouriteIDs)
             }
 
             // A search role lets SwiftUI render the system search tab style on supported iOS versions.
             Tab(value: AppTab.search, role: .search) {
-                SearchView(searchText: $searchText)
+                SearchView(searchText: $searchText, favouriteIDs: $favouriteIDs)
             }
         }
         // Activates search when the user selects the search tab.
@@ -32,6 +33,8 @@ private enum AppTab: Hashable {
 }
 
 private struct DiscoverView: View {
+    @Binding var favouriteIDs: Set<CatalogueItem.ID>
+
     // For now the catalogue is in-memory sample data. Later this can move to a dedicated model file.
     private let sections = CatalogueSection.sampleSections
 
@@ -41,7 +44,7 @@ private struct DiscoverView: View {
                 // LazyVStack keeps off-screen sections lightweight as the catalogue grows.
                 LazyVStack(alignment: .leading, spacing: 28) {
                     ForEach(sections) { section in
-                        CatalogueSectionView(section: section)
+                        CatalogueSectionView(section: section, favouriteIDs: $favouriteIDs)
                     }
                 }
                 .padding(.vertical, 18)
@@ -54,6 +57,7 @@ private struct DiscoverView: View {
 
 private struct SearchView: View {
     @Binding var searchText: String
+    @Binding var favouriteIDs: Set<CatalogueItem.ID>
 
     private var displayedSections: [CatalogueSection] {
         // Trim whitespace so a blank-looking query behaves like an empty search.
@@ -88,7 +92,7 @@ private struct SearchView: View {
                 } else {
                     LazyVStack(alignment: .leading, spacing: 28) {
                         ForEach(displayedSections) { section in
-                            CatalogueSectionView(section: section)
+                            CatalogueSectionView(section: section, favouriteIDs: $favouriteIDs)
                         }
                     }
                     .padding(.vertical, 18)
@@ -103,6 +107,7 @@ private struct SearchView: View {
 
 private struct CatalogueSectionView: View {
     let section: CatalogueSection
+    @Binding var favouriteIDs: Set<CatalogueItem.ID>
 
     var body: some View {
         VStack(alignment: .leading, spacing: 14) {
@@ -123,7 +128,7 @@ private struct CatalogueSectionView: View {
                 LazyHStack(alignment: .top, spacing: 16) {
                     ForEach(section.items) { item in
                         NavigationLink {
-                            CatalogueDestinationView(item: item)
+                            CatalogueDestinationView(item: item, favouriteIDs: $favouriteIDs)
                         } label: {
                             CatalogueCard(item: item)
                         }
@@ -138,14 +143,30 @@ private struct CatalogueSectionView: View {
 
 private struct CatalogueDestinationView: View {
     let item: CatalogueItem
+    @Binding var favouriteIDs: Set<CatalogueItem.ID>
 
     var body: some View {
         // Items can either open a real demo or fall back to the generic placeholder detail page.
         switch item.demo {
         case .liquidGlassButtons:
-            LiquidGlassButtonView()
+            LiquidGlassButtonView(
+                isFavourite: favouriteIDs.contains(item.id),
+                toggleFavourite: { toggleFavourite(item.id) }
+            )
         case .none:
-            CatalogueDetailView(item: item)
+            CatalogueDetailView(
+                item: item,
+                isFavourite: favouriteIDs.contains(item.id),
+                toggleFavourite: { toggleFavourite(item.id) }
+            )
+        }
+    }
+
+    private func toggleFavourite(_ id: CatalogueItem.ID) {
+        if favouriteIDs.contains(id) {
+            favouriteIDs.remove(id)
+        } else {
+            favouriteIDs.insert(id)
         }
     }
 }
@@ -197,6 +218,8 @@ private struct ThumbnailView: View {
 
 private struct CatalogueDetailView: View {
     let item: CatalogueItem
+    let isFavourite: Bool
+    let toggleFavourite: () -> Void
 
     var body: some View {
         ScrollView {
@@ -222,19 +245,64 @@ private struct CatalogueDetailView: View {
         }
         .navigationTitle(item.title)
         .navigationBarTitleDisplayMode(.inline)
+        .toolbar {
+            FavouriteToolbarButton(isFavourite: isFavourite, action: toggleFavourite)
+        }
         .background(.background)
     }
 }
 
 private struct FavouritesView: View {
+    @Binding var favouriteIDs: Set<CatalogueItem.ID>
+
+    private var favouriteItems: [CatalogueItem] {
+        CatalogueSection.sampleSections
+            .flatMap(\.items)
+            .filter { favouriteIDs.contains($0.id) }
+    }
+
     var body: some View {
         NavigationStack {
-            ContentUnavailableView(
-                "No Favourites Yet",
-                systemImage: "bookmark",
-                description: Text("Bookmark SwiftUI examples to keep them here.")
-            )
-            .navigationTitle("Favourites")
+            if favouriteItems.isEmpty {
+                ContentUnavailableView(
+                    "No Favourites Yet",
+                    systemImage: "bookmark",
+                    description: Text("Bookmark SwiftUI examples to keep them here.")
+                )
+            } else {
+                ScrollView {
+                    LazyVGrid(
+                        columns: [GridItem(.adaptive(minimum: 132), spacing: 16)],
+                        alignment: .leading,
+                        spacing: 20
+                    ) {
+                        ForEach(favouriteItems) { item in
+                            NavigationLink {
+                                CatalogueDestinationView(item: item, favouriteIDs: $favouriteIDs)
+                            } label: {
+                                CatalogueCard(item: item)
+                            }
+                            .buttonStyle(.plain)
+                        }
+                    }
+                    .padding(20)
+                }
+            }
+        }
+        .navigationTitle("Favourites")
+    }
+}
+
+struct FavouriteToolbarButton: ToolbarContent {
+    let isFavourite: Bool
+    let action: () -> Void
+
+    var body: some ToolbarContent {
+        ToolbarItem(placement: .primaryAction) {
+            Button(action: action) {
+                Image(systemName: isFavourite ? "bookmark.fill" : "bookmark")
+            }
+            .accessibilityLabel(isFavourite ? "Remove from Favourites" : "Add to Favourites")
         }
     }
 }
