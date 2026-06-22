@@ -146,7 +146,7 @@ private struct LayoutBasicsSection<Preview: View>: View {
                         .textSelection(.enabled)
                         .padding(12)
                 }
-                .background(.background, in: RoundedRectangle(cornerRadius: 12, style: .continuous))
+                .background(.thinMaterial, in: RoundedRectangle(cornerRadius: 12, style: .continuous))
                 .padding(.top, 8)
             } label: {
                 Label("Sample code", systemImage: "chevron.left.forwardslash.chevron.right")

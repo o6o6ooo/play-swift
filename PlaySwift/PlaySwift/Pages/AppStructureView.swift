@@ -174,7 +174,7 @@ private struct AppStructureSection: View {
                     .textSelection(.enabled)
                     .padding(12)
             }
-            .background(.background, in: RoundedRectangle(cornerRadius: 12, style: .continuous))
+            .background(.thinMaterial, in: RoundedRectangle(cornerRadius: 12, style: .continuous))
 
             Divider()
         }
