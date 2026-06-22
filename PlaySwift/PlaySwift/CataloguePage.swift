@@ -22,6 +22,7 @@ enum CatalogueDestination {
     case appStructure
     case swiftUILayoutBasics
     case navigationBasics
+    case tabNavigationBasics
     case buttons
     case mapsBottomSheet
     case matchedGeometryCards
@@ -44,7 +45,8 @@ extension CatalogueSection {
             pages: [
                 AppStructureView.metadata,
                 SwiftUILayoutBasicsView.metadata,
-                NavigationBasicsView.metadata
+                NavigationBasicsView.metadata,
+                TabNavigationBasicsView.metadata
             ]
         ),
         CatalogueSection(

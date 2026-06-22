@@ -152,6 +152,8 @@ private struct CatalogueDestinationView: View {
             SwiftUILayoutBasicsView(isFavourite: isFavourite, toggleFavourite: toggleFavourite)
         case .navigationBasics:
             NavigationBasicsView(isFavourite: isFavourite, toggleFavourite: toggleFavourite)
+        case .tabNavigationBasics:
+            TabNavigationBasicsView(isFavourite: isFavourite, toggleFavourite: toggleFavourite)
         case .buttons:
             ButtonsView(isFavourite: isFavourite, toggleFavourite: toggleFavourite)
         case .mapsBottomSheet:
