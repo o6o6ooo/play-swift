@@ -6,6 +6,16 @@ import AppKit
 #endif
 
 struct LiquidGlassButtonView: View {
+    static let metadata = CataloguePage(
+        id: "liquid-glass-buttons",
+        title: "Liquid Glass Buttons",
+        tags: ["Liquid Glass", "Buttons", "iOS 26"],
+        summary: "Compare SwiftUI's Apple-provided Liquid Glass button styles and copy sample code.",
+        symbol: "sparkles",
+        colour: Color(hex: 0x007AFF),
+        destination: .liquidGlassButtons
+    )
+
     let isFavourite: Bool
     let toggleFavourite: () -> Void
 
@@ -15,11 +25,9 @@ struct LiquidGlassButtonView: View {
         ScrollView {
             LazyVStack(alignment: .leading, spacing: 28) {
                 VStack(alignment: .leading, spacing: 8) {
-                    Text("Components")
-                        .font(.subheadline.weight(.semibold))
-                        .foregroundStyle(.blue)
+                    TagRow(tags: Self.metadata.tags, colour: Self.metadata.colour)
 
-                    Text("Liquid Glass Buttons")
+                    Text(Self.metadata.title)
                         .font(.largeTitle.weight(.bold))
 
                     Text("Button styles control appearance. Button roles describe the meaning of an action. Expand each example to inspect and copy the source.")
@@ -34,7 +42,7 @@ struct LiquidGlassButtonView: View {
             .padding(.vertical, 20)
             .padding(.horizontal, 20)
         }
-        .navigationTitle("Liquid Glass Buttons")
+        .navigationTitle(Self.metadata.title)
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
             FavouriteToolbarButton(isFavourite: isFavourite, action: toggleFavourite)

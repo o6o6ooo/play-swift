@@ -4,7 +4,7 @@ struct ContentView: View {
     @State private var selectedTab = AppTab.discover
     // The search text lives at the root so the search tab and result list share one source of truth.
     @State private var searchText = ""
-    @State private var favouriteIDs: Set<CatalogueItem.ID> = []
+    @State private var favouriteIDs: Set<CataloguePage.ID> = []
 
     var body: some View {
         TabView(selection: $selectedTab) {
@@ -33,10 +33,9 @@ private enum AppTab: Hashable {
 }
 
 private struct DiscoverView: View {
-    @Binding var favouriteIDs: Set<CatalogueItem.ID>
+    @Binding var favouriteIDs: Set<CataloguePage.ID>
 
-    // For now the catalogue is in-memory sample data. Later this can move to a dedicated model file.
-    private let sections = CatalogueSection.sampleSections
+    private let sections = CatalogueSection.homeSections
 
     var body: some View {
         NavigationStack {
@@ -57,27 +56,26 @@ private struct DiscoverView: View {
 
 private struct SearchView: View {
     @Binding var searchText: String
-    @Binding var favouriteIDs: Set<CatalogueItem.ID>
+    @Binding var favouriteIDs: Set<CataloguePage.ID>
 
     private var displayedSections: [CatalogueSection] {
         // Trim whitespace so a blank-looking query behaves like an empty search.
         let query = searchText.trimmingCharacters(in: .whitespacesAndNewlines)
 
         guard query.isEmpty == false else {
-            return CatalogueSection.sampleSections
+            return CatalogueSection.homeSections
         }
 
         // Search across the visible text a user would naturally expect to match.
-        let matches = CatalogueSection.sampleSections
-            .flatMap(\.items)
-            .filter { item in
-                item.title.localizedCaseInsensitiveContains(query)
-                || item.category.localizedCaseInsensitiveContains(query)
-                || item.summary.localizedCaseInsensitiveContains(query)
+        let matches = CataloguePage.allPages
+            .filter { page in
+                page.title.localizedCaseInsensitiveContains(query)
+                || page.summary.localizedCaseInsensitiveContains(query)
+                || page.tags.contains { $0.localizedCaseInsensitiveContains(query) }
             }
 
         return [
-            CatalogueSection(title: "Search results", items: matches)
+            CatalogueSection(id: "search-results", title: "Search results", pages: matches)
         ]
     }
 
@@ -85,7 +83,7 @@ private struct SearchView: View {
         NavigationStack {
             ScrollView {
                 // ContentUnavailableView gives us Apple's standard empty-search treatment.
-                if displayedSections.allSatisfy(\.items.isEmpty) {
+                if displayedSections.allSatisfy(\.pages.isEmpty) {
                     ContentUnavailableView.search(text: searchText)
                         .frame(maxWidth: .infinity)
                         .padding(.top, 96)
@@ -107,7 +105,7 @@ private struct SearchView: View {
 
 private struct CatalogueSectionView: View {
     let section: CatalogueSection
-    @Binding var favouriteIDs: Set<CatalogueItem.ID>
+    @Binding var favouriteIDs: Set<CataloguePage.ID>
 
     var body: some View {
         VStack(alignment: .leading, spacing: 14) {
@@ -126,11 +124,11 @@ private struct CatalogueSectionView: View {
             ScrollView(.horizontal, showsIndicators: false) {
                 // Horizontal rows keep each section scannable without leaving the home screen.
                 LazyHStack(alignment: .top, spacing: 16) {
-                    ForEach(section.items) { item in
+                    ForEach(section.pages) { page in
                         NavigationLink {
-                            CatalogueDestinationView(item: item, favouriteIDs: $favouriteIDs)
+                            CatalogueDestinationView(page: page, favouriteIDs: $favouriteIDs)
                         } label: {
-                            CatalogueCard(item: item)
+                            CatalogueCard(page: page)
                         }
                         .buttonStyle(.plain)
                     }
@@ -142,43 +140,58 @@ private struct CatalogueSectionView: View {
 }
 
 private struct CatalogueDestinationView: View {
-    let item: CatalogueItem
-    @Binding var favouriteIDs: Set<CatalogueItem.ID>
+    let page: CataloguePage
+    @Binding var favouriteIDs: Set<CataloguePage.ID>
 
     var body: some View {
-        // Items can either open a real demo or fall back to the generic placeholder detail page.
-        switch item.demo {
+        // ContentView chooses a destination; each page owns its own metadata and body.
+        switch page.destination {
+        case .buttons:
+            ButtonsView(isFavourite: isFavourite, toggleFavourite: toggleFavourite)
+        case .mapsBottomSheet:
+            MapsBottomSheetView(isFavourite: isFavourite, toggleFavourite: toggleFavourite)
+        case .matchedGeometryCards:
+            MatchedGeometryCardsView(isFavourite: isFavourite, toggleFavourite: toggleFavourite)
+        case .togglesAndSwitches:
+            TogglesAndSwitchesView(isFavourite: isFavourite, toggleFavourite: toggleFavourite)
+        case .pickersAndMenus:
+            PickersAndMenusView(isFavourite: isFavourite, toggleFavourite: toggleFavourite)
+        case .listsFormsAndRows:
+            ListsFormsAndRowsView(isFavourite: isFavourite, toggleFavourite: toggleFavourite)
+        case .musicMiniPlayer:
+            MusicMiniPlayerView(isFavourite: isFavourite, toggleFavourite: toggleFavourite)
+        case .photosZoomGrid:
+            PhotosZoomGridView(isFavourite: isFavourite, toggleFavourite: toggleFavourite)
+        case .walletCardStack:
+            WalletCardStackView(isFavourite: isFavourite, toggleFavourite: toggleFavourite)
         case .liquidGlassButtons:
-            LiquidGlassButtonView(
-                isFavourite: favouriteIDs.contains(item.id),
-                toggleFavourite: { toggleFavourite(item.id) }
-            )
-        case .none:
-            CatalogueDetailView(
-                item: item,
-                isFavourite: favouriteIDs.contains(item.id),
-                toggleFavourite: { toggleFavourite(item.id) }
-            )
+            LiquidGlassButtonView(isFavourite: isFavourite, toggleFavourite: toggleFavourite)
+        case .newNavigationPatterns:
+            NewNavigationPatternsView(isFavourite: isFavourite, toggleFavourite: toggleFavourite)
         }
     }
 
-    private func toggleFavourite(_ id: CatalogueItem.ID) {
-        if favouriteIDs.contains(id) {
-            favouriteIDs.remove(id)
+    private var isFavourite: Bool {
+        favouriteIDs.contains(page.id)
+    }
+
+    private func toggleFavourite() {
+        if favouriteIDs.contains(page.id) {
+            favouriteIDs.remove(page.id)
         } else {
-            favouriteIDs.insert(id)
+            favouriteIDs.insert(page.id)
         }
     }
 }
 
 private struct CatalogueCard: View {
-    let item: CatalogueItem
+    let page: CataloguePage
 
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
-            ThumbnailView(item: item)
+            ThumbnailView(page: page)
 
-            Text(item.title)
+            Text(page.title)
                 .font(.headline)
                 .foregroundStyle(.primary)
                 .lineLimit(2)
@@ -189,7 +202,7 @@ private struct CatalogueCard: View {
 }
 
 private struct ThumbnailView: View {
-    let item: CatalogueItem
+    let page: CataloguePage
 
     var body: some View {
         ZStack {
@@ -198,15 +211,15 @@ private struct ThumbnailView: View {
                 .fill(
                     LinearGradient(
                         colors: [
-                            item.colour.opacity(0.92),
-                            item.colour.opacity(0.55)
+                            page.colour.opacity(0.92),
+                            page.colour.opacity(0.55)
                         ],
                         startPoint: .topLeading,
                         endPoint: .bottomTrailing
                     )
                 )
 
-            Image(systemName: item.symbol)
+            Image(systemName: page.symbol)
                 .font(.system(size: 36, weight: .semibold))
                 .foregroundStyle(.white)
                 .shadow(color: .black.opacity(0.22), radius: 8, y: 4)
@@ -216,54 +229,17 @@ private struct ThumbnailView: View {
     }
 }
 
-private struct CatalogueDetailView: View {
-    let item: CatalogueItem
-    let isFavourite: Bool
-    let toggleFavourite: () -> Void
-
-    var body: some View {
-        ScrollView {
-            VStack(alignment: .leading, spacing: 20) {
-                // Reuse the card thumbnail so the detail page feels connected to the catalogue.
-                ThumbnailView(item: item)
-                    .frame(maxWidth: .infinity, alignment: .leading)
-
-                VStack(alignment: .leading, spacing: 8) {
-                    Text(item.category)
-                        .font(.subheadline.weight(.semibold))
-                        .foregroundStyle(item.colour)
-
-                    Text(item.title)
-                        .font(.largeTitle.weight(.bold))
-
-                    Text(item.summary)
-                        .font(.body)
-                        .foregroundStyle(.secondary)
-                }
-            }
-            .padding(20)
-        }
-        .navigationTitle(item.title)
-        .navigationBarTitleDisplayMode(.inline)
-        .toolbar {
-            FavouriteToolbarButton(isFavourite: isFavourite, action: toggleFavourite)
-        }
-        .background(.background)
-    }
-}
-
 private struct FavouritesView: View {
-    @Binding var favouriteIDs: Set<CatalogueItem.ID>
+    @Binding var favouriteIDs: Set<CataloguePage.ID>
 
-    private var favouriteItems: [CatalogueItem] {
-        CatalogueSection.sampleSections
-            .flatMap(\.items)
+    private var favouritePages: [CataloguePage] {
+        CataloguePage.allPages
             .filter { favouriteIDs.contains($0.id) }
     }
 
     var body: some View {
         NavigationStack {
-            if favouriteItems.isEmpty {
+            if favouritePages.isEmpty {
                 ContentUnavailableView(
                     "No Favourites Yet",
                     systemImage: "bookmark",
@@ -276,11 +252,11 @@ private struct FavouritesView: View {
                         alignment: .leading,
                         spacing: 20
                     ) {
-                        ForEach(favouriteItems) { item in
+                        ForEach(favouritePages) { page in
                             NavigationLink {
-                                CatalogueDestinationView(item: item, favouriteIDs: $favouriteIDs)
+                                CatalogueDestinationView(page: page, favouriteIDs: $favouriteIDs)
                             } label: {
-                                CatalogueCard(item: item)
+                                CatalogueCard(page: page)
                             }
                             .buttonStyle(.plain)
                         }
@@ -290,172 +266,5 @@ private struct FavouritesView: View {
             }
         }
         .navigationTitle("Favourites")
-    }
-}
-
-struct FavouriteToolbarButton: ToolbarContent {
-    let isFavourite: Bool
-    let action: () -> Void
-
-    var body: some ToolbarContent {
-        ToolbarItem(placement: .primaryAction) {
-            Button(action: action) {
-                Image(systemName: isFavourite ? "bookmark.fill" : "bookmark")
-            }
-            .accessibilityLabel(isFavourite ? "Remove from Favourites" : "Add to Favourites")
-        }
-    }
-}
-
-private struct CatalogueSection: Identifiable {
-    // Identifiable lets ForEach diff sections without manual id parameters.
-    let id = UUID()
-    let title: String
-    let items: [CatalogueItem]
-}
-
-private struct CatalogueItem: Identifiable {
-    // Each item represents one future interactive SwiftUI demo.
-    let id = UUID()
-    let title: String
-    let category: String
-    let summary: String
-    let symbol: String
-    let colour: Color
-    let demo: CatalogueDemo?
-
-    init(
-        title: String,
-        category: String,
-        summary: String,
-        symbol: String,
-        colour: Color,
-        demo: CatalogueDemo? = nil
-    ) {
-        self.title = title
-        self.category = category
-        self.summary = summary
-        self.symbol = symbol
-        self.colour = colour
-        self.demo = demo
-    }
-}
-
-private enum CatalogueDemo {
-    case liquidGlassButtons
-}
-
-private extension CatalogueSection {
-    // Seed content keeps the first screen useful before real demos are implemented.
-    static let sampleSections: [CatalogueSection] = [
-        CatalogueSection(
-            title: "Featured",
-            items: [
-                CatalogueItem(
-                    title: "Buttons that feel native",
-                    category: "Components",
-                    summary: "Compare prominent, bordered, destructive, menu-backed, and animated button styles.",
-                    symbol: "button.programmable",
-                    colour: Color(hex: 0x007AFF)
-                ),
-                CatalogueItem(
-                    title: "Maps-style bottom sheet",
-                    category: "Apple Inspired",
-                    summary: "Explore detents, grabbers, search panels, and floating controls in a Maps-inspired layout.",
-                    symbol: "map.fill",
-                    colour: Color(hex: 0x34C759)
-                ),
-                CatalogueItem(
-                    title: "Matched geometry cards",
-                    category: "Animations",
-                    summary: "Open compact cards into detail screens with a smooth shared-element transition.",
-                    symbol: "rectangle.stack.fill",
-                    colour: Color(hex: 0xFF2D55)
-                )
-            ]
-        ),
-        CatalogueSection(
-            title: "Components",
-            items: [
-                CatalogueItem(
-                    title: "Toggles and switches",
-                    category: "Controls",
-                    summary: "Inspect tinting, labels, disabled states, and settings-style toggle rows.",
-                    symbol: "switch.2",
-                    colour: Color(hex: 0x32ADE6)
-                ),
-                CatalogueItem(
-                    title: "Pickers and menus",
-                    category: "Controls",
-                    summary: "Try segmented controls, inline pickers, wheel pickers, menus, and selection states.",
-                    symbol: "filemenu.and.selection",
-                    colour: Color(hex: 0xFF9500)
-                ),
-                CatalogueItem(
-                    title: "Lists, forms, and rows",
-                    category: "Lists & Layout",
-                    summary: "Study grouped lists, form sections, swipe actions, and disclosure patterns.",
-                    symbol: "list.bullet.rectangle.fill",
-                    colour: Color(hex: 0x5856D6)
-                )
-            ]
-        ),
-        CatalogueSection(
-            title: "Apple Inspired",
-            items: [
-                CatalogueItem(
-                    title: "Music mini player",
-                    category: "Music",
-                    summary: "Recreate the compact player, queue entry point, and expansion transition.",
-                    symbol: "music.note.list",
-                    colour: Color(hex: 0xFF2D55)
-                ),
-                CatalogueItem(
-                    title: "Photos zoom grid",
-                    category: "Photos",
-                    summary: "Build a photo grid that zooms into a detail view with gesture-driven dismissal.",
-                    symbol: "photo.on.rectangle.angled",
-                    colour: Color(hex: 0x5AC8FA)
-                ),
-                CatalogueItem(
-                    title: "Wallet card stack",
-                    category: "Wallet",
-                    summary: "Experiment with stacked cards, depth, scrolling, and tap-to-expand interactions.",
-                    symbol: "creditcard.fill",
-                    colour: Color(hex: 0xFFCC00)
-                )
-            ]
-        ),
-        CatalogueSection(
-            title: "iOS 26 Lab",
-            items: [
-                CatalogueItem(
-                    title: "Liquid Glass Buttons",
-                    category: "Liquid Glass",
-                    summary: "Compare SwiftUI's Apple-provided Liquid Glass button styles and copy sample code.",
-                    symbol: "sparkles",
-                    colour: Color(hex: 0x007AFF),
-                    demo: .liquidGlassButtons
-                ),
-                CatalogueItem(
-                    title: "New navigation patterns",
-                    category: "Navigation",
-                    summary: "Prototype current tab, toolbar, and split-view ideas as the platform evolves.",
-                    symbol: "sidebar.leading",
-                    colour: Color(hex: 0x5856D6)
-                )
-            ]
-        )
-    ]
-}
-
-private extension Color {
-    // Small helper for using the Apple-style palette from the project notes.
-    init(hex: Int) {
-        self.init(
-            red: Double((hex >> 16) & 0xff) / 255,
-            green: Double((hex >> 8) & 0xff) / 255,
-            blue: Double(hex & 0xff) / 255
-        )
     }
 }
