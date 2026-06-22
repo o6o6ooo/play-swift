@@ -19,6 +19,7 @@ struct CataloguePage: Identifiable {
 }
 
 enum CatalogueDestination {
+    case appStructure
     case buttons
     case mapsBottomSheet
     case matchedGeometryCards
@@ -35,6 +36,13 @@ enum CatalogueDestination {
 extension CatalogueSection {
     // The home screen is built from metadata owned by each page view.
     static let homeSections: [CatalogueSection] = [
+        CatalogueSection(
+            id: "basics",
+            title: "Basics",
+            pages: [
+                AppStructureView.metadata
+            ]
+        ),
         CatalogueSection(
             id: "featured",
             title: "Featured",

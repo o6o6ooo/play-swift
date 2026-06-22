@@ -146,6 +146,8 @@ private struct CatalogueDestinationView: View {
     var body: some View {
         // ContentView chooses a destination; each page owns its own metadata and body.
         switch page.destination {
+        case .appStructure:
+            AppStructureView(isFavourite: isFavourite, toggleFavourite: toggleFavourite)
         case .buttons:
             ButtonsView(isFavourite: isFavourite, toggleFavourite: toggleFavourite)
         case .mapsBottomSheet:
