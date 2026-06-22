@@ -123,7 +123,7 @@ private struct CatalogueSectionView: View {
                 LazyHStack(alignment: .top, spacing: 16) {
                     ForEach(section.items) { item in
                         NavigationLink {
-                            CatalogueDetailView(item: item)
+                            CatalogueDestinationView(item: item)
                         } label: {
                             CatalogueCard(item: item)
                         }
@@ -132,6 +132,20 @@ private struct CatalogueSectionView: View {
                 }
                 .padding(.horizontal, 20)
             }
+        }
+    }
+}
+
+private struct CatalogueDestinationView: View {
+    let item: CatalogueItem
+
+    var body: some View {
+        // Items can either open a real demo or fall back to the generic placeholder detail page.
+        switch item.demo {
+        case .buttons:
+            GlassButtonView()
+        case .none:
+            CatalogueDetailView(item: item)
         }
     }
 }
@@ -240,6 +254,27 @@ private struct CatalogueItem: Identifiable {
     let summary: String
     let symbol: String
     let colour: Color
+    let demo: CatalogueDemo?
+
+    init(
+        title: String,
+        category: String,
+        summary: String,
+        symbol: String,
+        colour: Color,
+        demo: CatalogueDemo? = nil
+    ) {
+        self.title = title
+        self.category = category
+        self.summary = summary
+        self.symbol = symbol
+        self.colour = colour
+        self.demo = demo
+    }
+}
+
+private enum CatalogueDemo {
+    case buttons
 }
 
 private extension CatalogueSection {
@@ -253,7 +288,8 @@ private extension CatalogueSection {
                     category: "Components",
                     summary: "Compare prominent, bordered, destructive, menu-backed, and animated button styles.",
                     symbol: "button.programmable",
-                    colour: Color(hex: 0x007AFF)
+                    colour: Color(hex: 0x007AFF),
+                    demo: .buttons
                 ),
                 CatalogueItem(
                     title: "Maps-style bottom sheet",
