@@ -47,7 +47,7 @@ private struct DiscoverView: View {
                 .padding(.vertical, 18)
             }
             .navigationTitle("Discover")
-            .background(Color(.systemGroupedBackground))
+            .background(.background)
         }
     }
 }
@@ -95,7 +95,7 @@ private struct SearchView: View {
                 }
             }
             .navigationTitle("Search")
-            .background(Color(.systemGroupedBackground))
+            .background(.background)
             .searchable(text: $searchText, prompt: "Search PlaySwift")
         }
     }
@@ -222,7 +222,7 @@ private struct CatalogueDetailView: View {
         }
         .navigationTitle(item.title)
         .navigationBarTitleDisplayMode(.inline)
-        .background(Color(.systemGroupedBackground))
+        .background(.background)
     }
 }
 
@@ -284,9 +284,9 @@ private extension CatalogueSection {
             title: "Featured",
             items: [
                 CatalogueItem(
-                    title: "Buttons that feel native",
+                    title: "Glass Buttons",
                     category: "Components",
-                    summary: "Compare prominent, bordered, destructive, menu-backed, and animated button styles.",
+                    summary: "Compare SwiftUI's Apple-provided glass button styles and copy sample code.",
                     symbol: "button.programmable",
                     colour: Color(hex: 0x007AFF),
                     demo: .buttons

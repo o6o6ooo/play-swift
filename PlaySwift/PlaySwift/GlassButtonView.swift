@@ -33,7 +33,7 @@ struct GlassButtonView: View {
         }
         .navigationTitle("Glass Buttons")
         .navigationBarTitleDisplayMode(.inline)
-        .background(Color(.systemGroupedBackground))
+        .background(.background)
     }
 }
 
