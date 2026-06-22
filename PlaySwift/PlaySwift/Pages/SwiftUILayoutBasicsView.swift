@@ -26,27 +26,32 @@ struct SwiftUILayoutBasicsView: View {
                 code: """
                 VStack(alignment: .leading, spacing: 12) {
                     Text("Title")
-                        .padding()
-                        .background(.blue, in: RoundedRectangle(cornerRadius: 10))
+                        .font(.caption.weight(.semibold))
                         .foregroundStyle(.white)
+                        .padding(.horizontal, 12)
+                        .padding(.vertical, 9)
+                        .background(.blue.gradient, in: RoundedRectangle(cornerRadius: 10, style: .continuous))
 
                     Text("Subtitle")
-                        .padding()
-                        .background(.cyan, in: RoundedRectangle(cornerRadius: 10))
+                        .font(.caption.weight(.semibold))
                         .foregroundStyle(.white)
+                        .padding(.horizontal, 12)
+                        .padding(.vertical, 9)
+                        .background(.cyan.gradient, in: RoundedRectangle(cornerRadius: 10, style: .continuous))
 
-                    Button("Continue") {
-                        // Continue to the next step.
-                    }
-                    .buttonStyle(.borderedProminent)
-                    .tint(.green)
+                    Text("Continue")
+                        .font(.caption.weight(.semibold))
+                        .foregroundStyle(.white)
+                        .padding(.horizontal, 12)
+                        .padding(.vertical, 9)
+                        .background(.green.gradient, in: RoundedRectangle(cornerRadius: 10, style: .continuous))
                 }
                 """,
                 preview: {
-                    VStack(alignment: .leading, spacing: 10) {
-                        LayoutBlock("Title", colour: Color(hex: 0x007AFF))
-                        LayoutBlock("Subtitle", colour: Color(hex: 0x5AC8FA))
-                        LayoutBlock("Continue", colour: Color(hex: 0x34C759))
+                    VStack(alignment: .leading, spacing: 12) {
+                        LayoutBlock("Title", colour: .blue)
+                        LayoutBlock("Subtitle", colour: .cyan)
+                        LayoutBlock("Continue", colour: .green)
                     }
                 }
             )
@@ -57,38 +62,58 @@ struct SwiftUILayoutBasicsView: View {
                 code: """
                 HStack(spacing: 12) {
                     Image(systemName: "star.fill")
+                        .font(.system(size: 16, weight: .semibold))
+                        .foregroundStyle(.white)
+                        .frame(width: 36, height: 36)
+                        .background(.yellow.gradient, in: RoundedRectangle(cornerRadius: 10, style: .continuous))
+
                     Text("Favourite")
+                        .font(.caption.weight(.semibold))
+                        .foregroundStyle(.white)
+                        .padding(.horizontal, 12)
+                        .padding(.vertical, 9)
+                        .background(.orange.gradient, in: RoundedRectangle(cornerRadius: 10, style: .continuous))
+
                     Spacer()
+
                     Image(systemName: "chevron.right")
+                        .font(.system(size: 16, weight: .semibold))
+                        .foregroundStyle(.white)
+                        .frame(width: 36, height: 36)
+                        .background(.gray.gradient, in: RoundedRectangle(cornerRadius: 10, style: .continuous))
                 }
                 """,
                 preview: {
-                    HStack(spacing: 10) {
-                        LayoutIcon("star.fill", colour: Color(hex: 0xFFCC00))
-                        LayoutBlock("Favourite", colour: Color(hex: 0xFF9500))
+                    HStack(spacing: 12) {
+                        LayoutIcon("star.fill", colour: .yellow)
+                        LayoutBlock("Favourite", colour: .orange)
                         Spacer(minLength: 0)
-                        LayoutIcon("chevron.right", colour: Color(hex: 0x8E8E93))
+                        LayoutIcon("chevron.right", colour: .gray)
                     }
                 }
             )
 
             LayoutBasicsSection(
                 title: "ZStack",
-                summary: "ZStack layers views front to back. It is useful for badges, overlays, and text on top of backgrounds.",
+                summary: "ZStack layers views front to back. The topTrailing alignment places the badge in the top-right corner.",
                 code: """
                 ZStack(alignment: .topTrailing) {
-                    RoundedRectangle(cornerRadius: 16)
-                        .fill(.blue)
+                    RoundedRectangle(cornerRadius: 16, style: .continuous)
+                        .fill(.indigo.gradient)
+                        .frame(height: 96)
 
                     Text("New")
-                        .padding(8)
+                        .font(.caption.weight(.semibold))
+                        .padding(.horizontal, 10)
+                        .padding(.vertical, 6)
                         .background(.thinMaterial, in: Capsule())
+                        .padding(10)
                 }
                 """,
                 preview: {
                     ZStack(alignment: .topTrailing) {
                         RoundedRectangle(cornerRadius: 16, style: .continuous)
-                            .fill(Color(hex: 0x5856D6).gradient)
+                            .fill(.indigo.gradient)
                             .frame(height: 96)
 
                         Text("New")
@@ -107,17 +132,30 @@ struct SwiftUILayoutBasicsView: View {
                 code: """
                 HStack {
                     Text("Leading")
+                        .font(.caption.weight(.semibold))
+                        .foregroundStyle(.white)
+                        .padding(.horizontal, 12)
+                        .padding(.vertical, 9)
+                        .background(.green.gradient, in: RoundedRectangle(cornerRadius: 10, style: .continuous))
+
                     Spacer()
+
                     Text("Trailing")
+                        .font(.caption.weight(.semibold))
+                        .foregroundStyle(.white)
+                        .padding(.horizontal, 12)
+                        .padding(.vertical, 9)
+                        .background(.pink.gradient, in: RoundedRectangle(cornerRadius: 10, style: .continuous))
                 }
-                .padding()
+                .padding(12)
+                .background(.quaternary, in: RoundedRectangle(cornerRadius: 16, style: .continuous))
                 .frame(maxWidth: .infinity)
                 """,
                 preview: {
                     HStack {
-                        LayoutBlock("Leading", colour: Color(hex: 0x34C759))
+                        LayoutBlock("Leading", colour: .green)
                         Spacer()
-                        LayoutBlock("Trailing", colour: Color(hex: 0xFF2D55))
+                        LayoutBlock("Trailing", colour: .pink)
                     }
                     .padding(12)
                     .background(.quaternary, in: RoundedRectangle(cornerRadius: 16, style: .continuous))

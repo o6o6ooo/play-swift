@@ -20,67 +20,7 @@ struct NavigationBasicsView: View {
             isFavourite: isFavourite,
             toggleFavourite: toggleFavourite
         ) {
-            NavigationFlowDiagram()
-
-            NavigationBasicsSection(
-                title: "NavigationStack",
-                summary: "NavigationStack is the container that lets screens push deeper views.",
-                code: """
-                NavigationStack {
-                    List {
-                        NavigationLink("Lessons") {
-                            LessonsView()
-                        }
-
-                        NavigationLink("Favourites") {
-                            FavouritesView()
-                        }
-                    }
-                    .navigationTitle("Home")
-                }
-                """,
-                preview: {
-                    NavigationShellPreview(title: "Home") {
-                        NavigationPreviewRow(title: "Lessons", symbol: "book")
-                        NavigationPreviewRow(title: "Favourites", symbol: "bookmark")
-                    }
-                }
-            )
-
-            NavigationBasicsSection(
-                title: "NavigationLink",
-                summary: "NavigationLink shows tappable UI that opens another view when selected.",
-                code: """
-                NavigationLink {
-                    DetailView()
-                } label: {
-                    Label("Open Detail", systemImage: "chevron.right")
-                }
-                """,
-                preview: {
-                    NavigationPreviewRow(title: "Open Detail", symbol: "chevron.right")
-                }
-            )
-
-            NavigationBasicsSection(
-                title: "Navigation title",
-                summary: "navigationTitle sets the title for the current screen inside a navigation stack.",
-                code: """
-                NavigationStack {
-                    List {
-                        Text("First row")
-                        Text("Second row")
-                    }
-                    .navigationTitle("Components")
-                }
-                """,
-                preview: {
-                    NavigationShellPreview(title: "Components") {
-                        NavigationPreviewRow(title: "First row", symbol: "1.circle")
-                        NavigationPreviewRow(title: "Second row", symbol: "2.circle")
-                    }
-                }
-            )
+            NavigationBasicsCombinedSection()
 
             NavigationBasicsSection(
                 title: "Value-based destinations",
@@ -89,11 +29,37 @@ struct NavigationBasicsView: View {
                 struct Lesson: Identifiable, Hashable {
                     let id = UUID()
                     let title: String
+                    let systemImage: String
                 }
 
+                let lessons = [
+                    Lesson(title: "Stacks", systemImage: "square.stack.3d.up"),
+                    Lesson(title: "Navigation", systemImage: "point.topleft.down.curvedto.point.bottomright.up")
+                ]
+
                 NavigationStack {
-                    List(lessons) { lesson in
-                        NavigationLink(lesson.title, value: lesson)
+                    VStack(spacing: 8) {
+                        ForEach(lessons) { lesson in
+                            NavigationLink(value: lesson) {
+                                HStack(spacing: 10) {
+                                    Image(systemName: lesson.systemImage)
+                                        .foregroundStyle(.indigo)
+                                        .frame(width: 24)
+
+                                    Text(lesson.title)
+                                        .font(.subheadline.weight(.semibold))
+
+                                    Spacer()
+
+                                    Image(systemName: "chevron.right")
+                                        .font(.caption.weight(.semibold))
+                                        .foregroundStyle(.secondary)
+                                }
+                                .padding(12)
+                                .background(.quaternary, in: RoundedRectangle(cornerRadius: 12, style: .continuous))
+                            }
+                            .buttonStyle(.plain)
+                        }
                     }
                     .navigationDestination(for: Lesson.self) { lesson in
                         LessonDetailView(lesson: lesson)
@@ -108,48 +74,121 @@ struct NavigationBasicsView: View {
     }
 }
 
-private struct NavigationFlowDiagram: View {
+private struct NavigationBasicsCombinedSection: View {
+    private let code = """
+    NavigationStack {
+        VStack(spacing: 8) {
+            NavigationLink {
+                LessonsView()
+            } label: {
+                HStack(spacing: 10) {
+                    Image(systemName: "book")
+                        .foregroundStyle(.indigo)
+                        .frame(width: 24)
+
+                    Text("Lessons")
+                        .font(.subheadline.weight(.semibold))
+
+                    Spacer()
+
+                    Image(systemName: "chevron.right")
+                        .font(.caption.weight(.semibold))
+                        .foregroundStyle(.secondary)
+                }
+                .padding(12)
+                .background(.quaternary, in: RoundedRectangle(cornerRadius: 12, style: .continuous))
+            }
+            .buttonStyle(.plain)
+
+            NavigationLink {
+                FavouritesView()
+            } label: {
+                HStack(spacing: 10) {
+                    Image(systemName: "bookmark")
+                        .foregroundStyle(.indigo)
+                        .frame(width: 24)
+
+                    Text("Favourites")
+                        .font(.subheadline.weight(.semibold))
+
+                    Spacer()
+
+                    Image(systemName: "chevron.right")
+                        .font(.caption.weight(.semibold))
+                        .foregroundStyle(.secondary)
+                }
+                .padding(12)
+                .background(.quaternary, in: RoundedRectangle(cornerRadius: 12, style: .continuous))
+            }
+            .buttonStyle(.plain)
+        }
+        .navigationTitle("Home")
+    }
+    """
+
     var body: some View {
-        VStack(alignment: .leading, spacing: 14) {
-            Text("A simple navigation flow")
+        VStack(alignment: .leading, spacing: 16) {
+            Text("A basic navigation stack")
                 .font(.title2.weight(.bold))
 
-            HStack(spacing: 10) {
-                NavigationFlowNode(title: "List", symbol: "list.bullet", colour: Color(hex: 0x007AFF))
+            VStack(alignment: .leading, spacing: 12) {
+                NavigationConceptRow(
+                    title: "NavigationStack",
+                    summary: "The container that manages moving from one screen to another."
+                )
 
-                Image(systemName: "arrow.right")
-                    .font(.caption.weight(.bold))
-                    .foregroundStyle(.secondary)
+                NavigationConceptRow(
+                    title: "NavigationLink",
+                    summary: "The tappable row or button that opens the next screen."
+                )
 
-                NavigationFlowNode(title: "Detail", symbol: "doc.text", colour: Color(hex: 0x5856D6))
-
-                Image(systemName: "arrow.right")
-                    .font(.caption.weight(.bold))
-                    .foregroundStyle(.secondary)
-
-                NavigationFlowNode(title: "More", symbol: "ellipsis", colour: Color(hex: 0xFF9500))
+                NavigationConceptRow(
+                    title: ".navigationTitle",
+                    summary: "The modifier that gives the current screen its title."
+                )
             }
+
+            NavigationShellPreview(title: "Home") {
+                NavigationPreviewRow(title: "Lessons", symbol: "book")
+                NavigationPreviewRow(title: "Favourites", symbol: "bookmark")
+            }
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .padding(14)
+            .background(.background, in: RoundedRectangle(cornerRadius: 16, style: .continuous))
+
+            DisclosureGroup {
+                SampleCodeBlock(code: code)
+                    .padding(.top, 8)
+            } label: {
+                Label("Sample code", systemImage: "chevron.left.forwardslash.chevron.right")
+                    .font(.subheadline.weight(.semibold))
+            }
+
+            Divider()
         }
     }
 }
 
-private struct NavigationFlowNode: View {
+private struct NavigationConceptRow: View {
     let title: String
-    let symbol: String
-    let colour: Color
+    let summary: String
 
     var body: some View {
-        VStack(spacing: 8) {
-            Image(systemName: symbol)
-                .font(.system(size: 18, weight: .semibold))
-                .foregroundStyle(.white)
-                .frame(width: 44, height: 44)
-                .background(colour.gradient, in: RoundedRectangle(cornerRadius: 12, style: .continuous))
+        HStack(alignment: .top, spacing: 10) {
+            Circle()
+                .fill(.secondary)
+                .frame(width: 5, height: 5)
+                .padding(.top, 8)
 
-            Text(title)
-                .font(.caption.weight(.semibold))
+            VStack(alignment: .leading, spacing: 4) {
+                Text(title)
+                    .font(.headline)
+
+                Text(summary)
+                    .font(.subheadline)
+                    .foregroundStyle(.secondary)
+            }
         }
-        .frame(maxWidth: .infinity)
     }
 }
 
@@ -199,9 +238,6 @@ private struct NavigationShellPreview<Content: View>: View {
                     .font(.headline)
 
                 Spacer()
-
-                Image(systemName: "chevron.left")
-                    .foregroundStyle(.tertiary)
             }
 
             VStack(spacing: 8) {
@@ -218,7 +254,7 @@ private struct NavigationPreviewRow: View {
     var body: some View {
         HStack(spacing: 10) {
             Image(systemName: symbol)
-                .foregroundStyle(Color(hex: 0x5856D6))
+                .foregroundStyle(.indigo)
                 .frame(width: 24)
 
             Text(title)
