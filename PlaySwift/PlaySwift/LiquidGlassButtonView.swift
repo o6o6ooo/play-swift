@@ -10,7 +10,7 @@ struct LiquidGlassButtonView: View {
         id: "liquid-glass-buttons",
         title: "Liquid Glass Buttons",
         tags: ["Liquid Glass", "Buttons", "iOS 26"],
-        summary: "Compare SwiftUI's Apple-provided Liquid Glass button styles and copy sample code.",
+        summary: "Button styles control appearance. Button roles describe the meaning of an action. Expand each example to inspect and copy the source.",
         symbol: "sparkles",
         colour: Color(hex: 0x007AFF),
         destination: .liquidGlassButtons
@@ -22,32 +22,15 @@ struct LiquidGlassButtonView: View {
     private let sections = GlassButtonExampleSection.sections
 
     var body: some View {
-        ScrollView {
-            LazyVStack(alignment: .leading, spacing: 28) {
-                VStack(alignment: .leading, spacing: 8) {
-                    TagRow(tags: Self.metadata.tags, colour: Self.metadata.colour)
-
-                    Text(Self.metadata.title)
-                        .font(.largeTitle.weight(.bold))
-
-                    Text("Button styles control appearance. Button roles describe the meaning of an action. Expand each example to inspect and copy the source.")
-                        .foregroundStyle(.secondary)
-                }
-                .padding(.horizontal, 20)
-
-                ForEach(sections) { section in
-                    GlassButtonExampleSectionView(section: section)
-                }
+        CataloguePageContainer(
+            page: Self.metadata,
+            isFavourite: isFavourite,
+            toggleFavourite: toggleFavourite
+        ) {
+            ForEach(sections) { section in
+                GlassButtonExampleSectionView(section: section)
             }
-            .padding(.vertical, 20)
-            .padding(.horizontal, 20)
         }
-        .navigationTitle(Self.metadata.title)
-        .navigationBarTitleDisplayMode(.inline)
-        .toolbar {
-            FavouriteToolbarButton(isFavourite: isFavourite, action: toggleFavourite)
-        }
-        .background(.background)
     }
 }
 
