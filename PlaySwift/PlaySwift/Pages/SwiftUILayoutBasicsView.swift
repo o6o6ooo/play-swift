@@ -140,14 +140,8 @@ private struct LayoutBasicsSection<Preview: View>: View {
                 .background(.background, in: RoundedRectangle(cornerRadius: 16, style: .continuous))
 
             DisclosureGroup {
-                ScrollView(.horizontal, showsIndicators: false) {
-                    Text(code)
-                        .font(.system(.caption, design: .monospaced))
-                        .textSelection(.enabled)
-                        .padding(12)
-                }
-                .background(.thinMaterial, in: RoundedRectangle(cornerRadius: 12, style: .continuous))
-                .padding(.top, 8)
+                SampleCodeBlock(code: code)
+                    .padding(.top, 8)
             } label: {
                 Label("Sample code", systemImage: "chevron.left.forwardslash.chevron.right")
                     .font(.subheadline.weight(.semibold))

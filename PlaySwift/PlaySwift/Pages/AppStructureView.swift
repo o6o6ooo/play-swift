@@ -167,14 +167,7 @@ private struct AppStructureSection: View {
                     .foregroundStyle(.secondary)
             }
 
-            // A simple code block keeps this beginner page readable without extra controls yet.
-            ScrollView(.horizontal, showsIndicators: false) {
-                Text(code)
-                    .font(.system(.caption, design: .monospaced))
-                    .textSelection(.enabled)
-                    .padding(12)
-            }
-            .background(.thinMaterial, in: RoundedRectangle(cornerRadius: 12, style: .continuous))
+            SampleCodeBlock(code: code)
 
             Divider()
         }

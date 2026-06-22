@@ -1,9 +1,4 @@
 import SwiftUI
-#if canImport(UIKit)
-import UIKit
-#elseif canImport(AppKit)
-import AppKit
-#endif
 
 struct LiquidGlassButtonView: View {
     static let metadata = CataloguePage(
@@ -73,7 +68,7 @@ private struct GlassButtonExampleView: View {
                 .frame(maxWidth: .infinity, alignment: .leading)
 
             DisclosureGroup {
-                CodeBlock(code: example.code)
+                SampleCodeBlock(code: example.code)
                     .padding(.top, 8)
             } label: {
                 Label("Sample code", systemImage: "chevron.left.forwardslash.chevron.right")
@@ -81,39 +76,6 @@ private struct GlassButtonExampleView: View {
             }
 
             Divider()
-        }
-    }
-}
-
-private struct CodeBlock: View {
-    let code: String
-
-    var body: some View {
-        VStack(alignment: .leading, spacing: 12) {
-            HStack {
-                Text("Swift")
-                    .font(.caption.weight(.semibold))
-                    .foregroundStyle(.secondary)
-
-                Spacer()
-
-                Button {
-                    Clipboard.copy(code)
-                } label: {
-                    Image(systemName: "doc.on.doc")
-                        .padding(8)
-                }
-                .buttonStyle(.plain)
-                .accessibilityLabel("Copy")
-            }
-
-            ScrollView(.horizontal, showsIndicators: false) {
-                Text(code)
-                    .font(.system(.caption, design: .monospaced))
-                    .textSelection(.enabled)
-                    .padding(12)
-            }
-            .background(.thinMaterial, in: RoundedRectangle(cornerRadius: 12, style: .continuous))
         }
     }
 }
@@ -288,16 +250,4 @@ private extension GlassButtonExample {
             .buttonStyle(.glassProminent)
         }
     ]
-}
-
-private enum Clipboard {
-    static func copy(_ text: String) {
-        // Copy uses Apple's platform pasteboard APIs while the UI stays SwiftUI-native.
-        #if canImport(UIKit)
-        UIPasteboard.general.string = text
-        #elseif canImport(AppKit)
-        NSPasteboard.general.clearContents()
-        NSPasteboard.general.setString(text, forType: .string)
-        #endif
-    }
 }
