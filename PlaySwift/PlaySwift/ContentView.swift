@@ -154,6 +154,8 @@ private struct CatalogueDestinationView: View {
             NavigationBasicsView(isFavourite: isFavourite, toggleFavourite: toggleFavourite)
         case .tabNavigationBasics:
             TabNavigationBasicsView(isFavourite: isFavourite, toggleFavourite: toggleFavourite)
+        case .stateAndBinding:
+            StateAndBindingView(isFavourite: isFavourite, toggleFavourite: toggleFavourite)
         case .buttons:
             ButtonsView(isFavourite: isFavourite, toggleFavourite: toggleFavourite)
         case .mapsBottomSheet:
