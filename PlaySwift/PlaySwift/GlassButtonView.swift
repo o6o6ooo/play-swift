@@ -10,7 +10,7 @@ struct GlassButtonView: View {
 
     var body: some View {
         ScrollView {
-            LazyVStack(alignment: .leading, spacing: 20) {
+            LazyVStack(alignment: .leading, spacing: 28) {
                 VStack(alignment: .leading, spacing: 8) {
                     Text("Components")
                         .font(.subheadline.weight(.semibold))
@@ -29,6 +29,7 @@ struct GlassButtonView: View {
                 }
             }
             .padding(.vertical, 20)
+            .padding(.horizontal, 20)
         }
         .navigationTitle("Glass Buttons")
         .navigationBarTitleDisplayMode(.inline)
@@ -60,10 +61,9 @@ private struct GlassButtonExampleView: View {
                 Label("Sample code", systemImage: "chevron.left.forwardslash.chevron.right")
                     .font(.subheadline.weight(.semibold))
             }
+
+            Divider()
         }
-        .padding(16)
-        .background(.regularMaterial, in: RoundedRectangle(cornerRadius: 18, style: .continuous))
-        .padding(.horizontal, 20)
     }
 }
 
@@ -83,8 +83,9 @@ private struct CodeBlock: View {
                     Clipboard.copy(code)
                 } label: {
                     Image(systemName: "doc.on.doc")
+                        .padding(8)
                 }
-                .buttonStyle(.glass)
+                .buttonStyle(.plain)
                 .accessibilityLabel("Copy")
             }
 
