@@ -1,0 +1,25 @@
+# Personal project instructions
+AGENTS.md
+
+# macOS
+.DS_Store
+
+# Xcode user state
+*.xcuserstate
+*.xcuserdatad/
+xcuserdata/
+
+# Xcode build output
+DerivedData/
+build/
+
+# Swift Package Manager
+.build/
+Package.resolved
+
+# Playgrounds
+timeline.xctimeline
+playground.xcworkspace/
+
+# SwiftPM generated Xcode projects
+*.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/
