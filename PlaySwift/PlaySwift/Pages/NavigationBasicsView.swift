@@ -23,8 +23,8 @@ struct NavigationBasicsView: View {
             NavigationBasicsCombinedSection()
 
             NavigationBasicsSection(
-                title: "Value-based destinations",
-                summary: "For lists of data, pass a value through NavigationLink and describe the matching destination once.",
+                title: "NavigationLinks from an array",
+                summary: "Define a data type, put values in an array, then use ForEach to create one NavigationLink for each value.",
                 code: """
                 struct Lesson: Identifiable, Hashable {
                     let id = UUID()
