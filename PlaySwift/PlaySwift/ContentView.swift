@@ -1,34 +1,44 @@
-//
-//  ContentView.swift
-//  PlaySwift
-//
-//  Created by Sakura Wallace on 22/06/2026.
-//
-
 import SwiftUI
 
 struct ContentView: View {
-    var body: some View {
-        TabView {
-            DiscoverView()
-                .tabItem {
-                    Label("Discover", systemImage: "square.grid.2x2.fill")
-                }
+    @State private var selectedTab = AppTab.discover
+    // The search text lives at the root so the search tab and result list share one source of truth.
+    @State private var searchText = ""
 
-            FavouritesView()
-                .tabItem {
-                    Label("Favourites", systemImage: "bookmark.fill")
-                }
+    var body: some View {
+        TabView(selection: $selectedTab) {
+            Tab("Discover", systemImage: "square.grid.2x2.fill", value: AppTab.discover) {
+                DiscoverView()
+            }
+
+            Tab("Favourites", systemImage: "bookmark.fill", value: AppTab.favourites) {
+                FavouritesView()
+            }
+
+            // A search role lets SwiftUI render the system search tab style on supported iOS versions.
+            Tab(value: AppTab.search, role: .search) {
+                SearchView(searchText: $searchText)
+            }
         }
+        // Activates search when the user selects the search tab.
+        .tabViewSearchActivation(.searchTabSelection)
     }
 }
 
+private enum AppTab: Hashable {
+    case discover
+    case favourites
+    case search
+}
+
 private struct DiscoverView: View {
+    // For now the catalogue is in-memory sample data. Later this can move to a dedicated model file.
     private let sections = CatalogueSection.sampleSections
 
     var body: some View {
         NavigationStack {
             ScrollView {
+                // LazyVStack keeps off-screen sections lightweight as the catalogue grows.
                 LazyVStack(alignment: .leading, spacing: 28) {
                     ForEach(sections) { section in
                         CatalogueSectionView(section: section)
@@ -42,11 +52,61 @@ private struct DiscoverView: View {
     }
 }
 
+private struct SearchView: View {
+    @Binding var searchText: String
+
+    private var displayedSections: [CatalogueSection] {
+        // Trim whitespace so a blank-looking query behaves like an empty search.
+        let query = searchText.trimmingCharacters(in: .whitespacesAndNewlines)
+
+        guard query.isEmpty == false else {
+            return CatalogueSection.sampleSections
+        }
+
+        // Search across the visible text a user would naturally expect to match.
+        let matches = CatalogueSection.sampleSections
+            .flatMap(\.items)
+            .filter { item in
+                item.title.localizedCaseInsensitiveContains(query)
+                || item.category.localizedCaseInsensitiveContains(query)
+                || item.summary.localizedCaseInsensitiveContains(query)
+            }
+
+        return [
+            CatalogueSection(title: "Search results", items: matches)
+        ]
+    }
+
+    var body: some View {
+        NavigationStack {
+            ScrollView {
+                // ContentUnavailableView gives us Apple's standard empty-search treatment.
+                if displayedSections.allSatisfy(\.items.isEmpty) {
+                    ContentUnavailableView.search(text: searchText)
+                        .frame(maxWidth: .infinity)
+                        .padding(.top, 96)
+                } else {
+                    LazyVStack(alignment: .leading, spacing: 28) {
+                        ForEach(displayedSections) { section in
+                            CatalogueSectionView(section: section)
+                        }
+                    }
+                    .padding(.vertical, 18)
+                }
+            }
+            .navigationTitle("Search")
+            .background(Color(.systemGroupedBackground))
+            .searchable(text: $searchText, prompt: "Search PlaySwift")
+        }
+    }
+}
+
 private struct CatalogueSectionView: View {
     let section: CatalogueSection
 
     var body: some View {
         VStack(alignment: .leading, spacing: 14) {
+            // Section titles mirror Apple's article-style browse pages.
             HStack(spacing: 6) {
                 Text(section.title)
                     .font(.title2.weight(.bold))
@@ -59,6 +119,7 @@ private struct CatalogueSectionView: View {
             .padding(.horizontal, 20)
 
             ScrollView(.horizontal, showsIndicators: false) {
+                // Horizontal rows keep each section scannable without leaving the home screen.
                 LazyHStack(alignment: .top, spacing: 16) {
                     ForEach(section.items) { item in
                         NavigationLink {
@@ -97,6 +158,7 @@ private struct ThumbnailView: View {
 
     var body: some View {
         ZStack {
+            // The thumbnails are placeholders until real component previews are added.
             RoundedRectangle(cornerRadius: 18, style: .continuous)
                 .fill(
                     LinearGradient(
@@ -125,6 +187,7 @@ private struct CatalogueDetailView: View {
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 20) {
+                // Reuse the card thumbnail so the detail page feels connected to the catalogue.
                 ThumbnailView(item: item)
                     .frame(maxWidth: .infinity, alignment: .leading)
 
@@ -163,12 +226,14 @@ private struct FavouritesView: View {
 }
 
 private struct CatalogueSection: Identifiable {
+    // Identifiable lets ForEach diff sections without manual id parameters.
     let id = UUID()
     let title: String
     let items: [CatalogueItem]
 }
 
 private struct CatalogueItem: Identifiable {
+    // Each item represents one future interactive SwiftUI demo.
     let id = UUID()
     let title: String
     let category: String
@@ -178,6 +243,7 @@ private struct CatalogueItem: Identifiable {
 }
 
 private extension CatalogueSection {
+    // Seed content keeps the first screen useful before real demos are implemented.
     static let sampleSections: [CatalogueSection] = [
         CatalogueSection(
             title: "Featured",
@@ -280,6 +346,7 @@ private extension CatalogueSection {
 }
 
 private extension Color {
+    // Small helper for using the Apple-style palette from the project notes.
     init(hex: Int) {
         self.init(
             red: Double((hex >> 16) & 0xff) / 255,
