@@ -26,17 +26,27 @@ struct SwiftUILayoutBasicsView: View {
                 code: """
                 VStack(alignment: .leading, spacing: 12) {
                     Text("Title")
+                        .padding()
+                        .background(.blue, in: RoundedRectangle(cornerRadius: 10))
+                        .foregroundStyle(.white)
+
                     Text("Subtitle")
+                        .padding()
+                        .background(.cyan, in: RoundedRectangle(cornerRadius: 10))
+                        .foregroundStyle(.white)
+
                     Button("Continue") {
                         // Continue to the next step.
                     }
+                    .buttonStyle(.borderedProminent)
+                    .tint(.green)
                 }
                 """,
                 preview: {
                     VStack(alignment: .leading, spacing: 10) {
                         LayoutBlock("Title", colour: Color(hex: 0x007AFF))
                         LayoutBlock("Subtitle", colour: Color(hex: 0x5AC8FA))
-                        LayoutBlock("Button", colour: Color(hex: 0x34C759))
+                        LayoutBlock("Continue", colour: Color(hex: 0x34C759))
                     }
                 }
             )
