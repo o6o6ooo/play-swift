@@ -20,6 +20,7 @@ struct CataloguePage: Identifiable {
 
 enum CatalogueDestination {
     case appStructure
+    case swiftUILayoutBasics
     case buttons
     case mapsBottomSheet
     case matchedGeometryCards
@@ -40,7 +41,8 @@ extension CatalogueSection {
             id: "basics",
             title: "Basics",
             pages: [
-                AppStructureView.metadata
+                AppStructureView.metadata,
+                SwiftUILayoutBasicsView.metadata
             ]
         ),
         CatalogueSection(
