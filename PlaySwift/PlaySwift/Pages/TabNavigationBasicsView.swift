@@ -53,9 +53,6 @@ private struct TabNavigationSection: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: 16) {
-            Text("Tabs organise top-level areas")
-                .font(.title2.weight(.bold))
-
             VStack(alignment: .leading, spacing: 12) {
                 TabNavigationConceptRow(
                     title: "TabView",
@@ -85,8 +82,6 @@ private struct TabNavigationSection: View {
                 Label("Sample code", systemImage: "chevron.left.forwardslash.chevron.right")
                     .font(.subheadline.weight(.semibold))
             }
-
-            Divider()
         }
     }
 }

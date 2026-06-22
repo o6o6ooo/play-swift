@@ -53,9 +53,6 @@ private struct StateAndBindingSection: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: 16) {
-            Text("@State owns data, @Binding edits it")
-                .font(.title2.weight(.bold))
-
             VStack(alignment: .leading, spacing: 12) {
                 StateBindingConceptRow(
                     title: "@State",
@@ -80,8 +77,6 @@ private struct StateAndBindingSection: View {
                 Label("Sample code", systemImage: "chevron.left.forwardslash.chevron.right")
                     .font(.subheadline.weight(.semibold))
             }
-
-            Divider()
         }
     }
 }
