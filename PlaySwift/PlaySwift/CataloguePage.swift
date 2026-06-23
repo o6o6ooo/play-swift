@@ -35,6 +35,7 @@ enum CatalogueDestination {
     case photosZoomGrid
     case walletCardStack
     case liquidGlassButtons
+    case liquidGlassToolbars
     case newNavigationPatterns
 }
 
@@ -85,6 +86,7 @@ extension CatalogueSection {
             title: "iOS 26 Lab",
             pages: [
                 LiquidGlassButtonView.metadata,
+                LiquidGlassToolbarsView.metadata,
                 NewNavigationPatternsView.metadata
             ]
         )

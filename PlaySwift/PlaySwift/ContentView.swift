@@ -178,6 +178,8 @@ private struct CatalogueDestinationView: View {
             WalletCardStackView(isFavourite: isFavourite, toggleFavourite: toggleFavourite)
         case .liquidGlassButtons:
             LiquidGlassButtonView(isFavourite: isFavourite, toggleFavourite: toggleFavourite)
+        case .liquidGlassToolbars:
+            LiquidGlassToolbarsView(isFavourite: isFavourite, toggleFavourite: toggleFavourite)
         case .newNavigationPatterns:
             NewNavigationPatternsView(isFavourite: isFavourite, toggleFavourite: toggleFavourite)
         }
