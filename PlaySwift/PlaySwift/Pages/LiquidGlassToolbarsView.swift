@@ -263,12 +263,6 @@ private extension LiquidGlassToolbarExample {
                             .buttonStyle(.glass(.clear))
                         }
 
-                        ToolbarItem(placement: .principal) {
-                            Text("ADJUST")
-                                .font(.headline)
-                                .foregroundStyle(.secondary)
-                        }
-
                         ToolbarItemGroup(placement: .topBarTrailing) {
                             Button {
                                 // Mark up.
@@ -326,22 +320,26 @@ private struct SearchToolbarPreview: View {
         HStack(spacing: 14) {
             ToolbarButtonGroup(symbols: ["line.3.horizontal"])
 
-            HStack(spacing: 10) {
-                Image(systemName: "magnifyingglass")
-                    .font(.title3)
+            Button {
+            } label: {
+                HStack(spacing: 10) {
+                    Image(systemName: "magnifyingglass")
+                        .font(.body)
 
-                Text("Search")
-                    .font(.title3)
-                    .foregroundStyle(.secondary)
+                    Text("Search")
+                        .font(.body)
+                        .foregroundStyle(.secondary)
 
-                Spacer()
+                    Spacer()
 
-                Image(systemName: "mic")
-                    .font(.title3)
+                    Image(systemName: "mic")
+                        .font(.body)
+                }
+                .padding(.horizontal, 6)
+                .padding(.vertical, 6)
             }
-            .padding(.horizontal, 16)
-            .padding(.vertical, 11)
-            .background(.regularMaterial, in: Capsule())
+            .buttonStyle(.glass(.clear))
+            .buttonBorderShape(.capsule)
 
             ToolbarButtonGroup(symbols: ["square.and.pencil"])
         }
@@ -356,12 +354,6 @@ private struct TopEditingToolbarPreview: View {
                 "arrow.uturn.backward",
                 "arrow.uturn.forward"
             ])
-
-            Spacer()
-
-            Text("ADJUST")
-                .font(.headline)
-                .foregroundStyle(.secondary)
 
             Spacer()
 
@@ -382,24 +374,26 @@ private struct ToolbarButtonGroup: View {
             Button {
             } label: {
                 Image(systemName: symbol)
-                    .frame(width: 44, height: 44)
+								.font(.body)
+                    .frame(width: 32, height: 32)
             }
-            .buttonStyle(.plain)
-            .background(.regularMaterial, in: Circle())
+            .buttonStyle(.glass(.clear))
+            .buttonBorderShape(.circle)
         } else {
-            HStack(spacing: 18) {
-                ForEach(symbols, id: \.self) { symbol in
-                    Button {
-                    } label: {
+            Button {
+            } label: {
+                HStack(spacing: 12) {
+                    ForEach(symbols, id: \.self) { symbol in
                         Image(systemName: symbol)
                             .frame(width: 28, height: 28)
+														.font(.body)
                     }
-                    .buttonStyle(.plain)
                 }
+                .padding(.horizontal, 6)
+                .padding(.vertical, 2)
             }
-            .padding(.horizontal, 16)
-            .padding(.vertical, 10)
-            .background(.regularMaterial, in: Capsule())
+            .buttonStyle(.glass(.clear))
+            .buttonBorderShape(.capsule)
         }
     }
 }
