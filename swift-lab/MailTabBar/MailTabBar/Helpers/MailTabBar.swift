@@ -10,7 +10,7 @@ import SwiftUI
 protocol MailTabItem: CaseIterable, Equatable, Hashable{
 	var symbol: String { get }
 	var title: String { get }
-	var acttveTint: Color { get }
+	var activeTint: Color { get }
 	var activeBackground: Color { get  }
 }
 
@@ -79,7 +79,7 @@ struct MailTabBar<Tab: MailTabItem>: View {
 				}
 			
 		}
-		.foregroundStyle(isActive ? tab.acttveTint : .gray)
+		.foregroundStyle(isActive ? tab.activeTint : .gray)
 		.padding(.horizontal, isActive ? 20 : 0)
 		.frame(maxHeight: .infinity)
 		.frame(width: isActive ? nil : inActiveWidth)

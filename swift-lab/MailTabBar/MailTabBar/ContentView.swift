@@ -45,7 +45,7 @@ enum MailTab: MailTabItem{
 		}
 	}
 	
-	var acttveToint: Color{
+	var activeTint: Color{
 		switch self{
 		case .primary, .transactions, .updates, .promotions: .white
 		case .allMails: Color.black
