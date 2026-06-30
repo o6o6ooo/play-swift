@@ -3,6 +3,7 @@
 //  CustomTabBar
 //
 //  Created by Sakura Wallace on 30/06/2026.
+//  Refer: https://youtu.be/UjR2FK6_DuQ?si=X1m70WTpididM9lD
 //
 
 import SwiftUI

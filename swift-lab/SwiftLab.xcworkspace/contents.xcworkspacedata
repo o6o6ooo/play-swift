@@ -2,6 +2,9 @@
 <Workspace
    version = "1.0">
    <FileRef
+      location = "group:CustomTabBar/CustomTabBar/CustomTabBar.xcodeproj">
+   </FileRef>
+   <FileRef
       location = "group:MailTabBar/MailTabBar.xcodeproj">
    </FileRef>
 </Workspace>
