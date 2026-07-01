@@ -8,15 +8,15 @@
 
 import SwiftUI
 
-enum MailTab: MailTabItem{
+enum MailTab: MailTabItem {
 	case primary
 	case transactions
 	case updates
 	case promotions
 	case allMails
-	
-	var title: String{
-		return switch self{
+
+	var title: String {
+		return switch self {
 		case .primary: "Primary"
 		case .transactions: "Transactions"
 		case .updates: "Updates"
@@ -24,9 +24,9 @@ enum MailTab: MailTabItem{
 		case .allMails: "All Mail"
 		}
 	}
-	
-	var symbol: String{
-		return switch self{
+
+	var symbol: String {
+		return switch self {
 		case .primary: "person.fill"
 		case .transactions: "cart.fill"
 		case .updates: "text.bubble.fill"
@@ -34,9 +34,9 @@ enum MailTab: MailTabItem{
 		case .allMails: "tray.fill"
 		}
 	}
-	
-	var activeBackground: Color{
-		return switch self{
+
+	var activeBackground: Color {
+		return switch self {
 		case .primary: .blue
 		case .transactions: .green
 		case .updates: .indigo
@@ -44,9 +44,9 @@ enum MailTab: MailTabItem{
 		case .allMails: Color.white
 		}
 	}
-	
-	var activeTint: Color{
-		switch self{
+
+	var activeTint: Color {
+		switch self {
 		case .primary, .transactions, .updates, .promotions: .white
 		case .allMails: Color.black
 		}
@@ -55,22 +55,22 @@ enum MailTab: MailTabItem{
 
 struct ContentView: View {
 	@State private var activeTab: MailTab = .primary
-    var body: some View {
-			NavigationStack{
-				ScrollView(.vertical){
-					MailTabBar(
-						spacing: 8,
-						trailingVisibility: 15,
-						isGestureEnabled: true,
-						selection: $activeTab
-					)
-				}
-				.safeAreaPadding(15)
-				.navigationTitle("Inbox")
-				}
+	var body: some View {
+		NavigationStack {
+			ScrollView(.vertical) {
+				MailTabBar(
+					spacing: 8,
+					trailingVisibility: 15,
+					isGestureEnabled: true,
+					selection: $activeTab
+				)
+			}
+			.safeAreaPadding(15)
+			.navigationTitle("Inbox")
 		}
+	}
 }
 
 #Preview {
-    ContentView()
+	ContentView()
 }

@@ -7,11 +7,11 @@
 
 import SwiftUI
 
-protocol MailTabItem: CaseIterable, Equatable, Hashable{
+protocol MailTabItem: CaseIterable, Equatable, Hashable {
 	var symbol: String { get }
 	var title: String { get }
 	var activeTint: Color { get }
-	var activeBackground: Color { get  }
+	var activeBackground: Color { get }
 }
 
 struct MailTabBar<Tab: MailTabItem>: View {
@@ -23,20 +23,22 @@ struct MailTabBar<Tab: MailTabItem>: View {
 	@State private var previousTab: Tab?
 	var body: some View {
 		let isLastTabActive: Bool = selection == allTabs.last
-		
-		GeometryReader{
+
+		GeometryReader {
 			let containerSize = $0.size
 			let activeTitleWidth: CGFloat = tabTitleSize[selection]?.width ?? 0
 			// Symbol 20, Horizontal padding 40, Spacing 6
 			let actvieWidth: CGFloat = activeTitleWidth + 60 + 6
 			let removeCount: Int = isLastTabActive ? 1 : min(2, allTabs.count - 1)
 			let spacingValue: CGFloat = CGFloat(allTabs.count - removeCount) * spacing
-			let inActiveWidth: CGFloat = (containerSize.width - actvieWidth - spacingValue) / CGFloat(allTabs.count - 1)
-			HStack(spacing: spacing){
-				ForEach(allTabs, id: \.title){ Tab in
+			let inActiveWidth: CGFloat =
+				(containerSize.width - actvieWidth - spacingValue)
+				/ CGFloat(allTabs.count - 1)
+			HStack(spacing: spacing) {
+				ForEach(allTabs, id: \.title) { Tab in
 					TabItemView(Tab, inActiveWidth: inActiveWidth)
 				}
-				
+
 			}
 		}
 		.padding(.trailing, isLastTabActive ? 0 : trailingVisibility)
@@ -44,23 +46,23 @@ struct MailTabBar<Tab: MailTabItem>: View {
 		.contentShape(.rect)
 		.gesture(toggleGesture, isEnabled: isGestureEnabled)
 		.animation(animation, value: selection)
-		.onAppear{
+		.onAppear {
 			guard previousTab == nil else { return }
-			previousTab = selection 
+			previousTab = selection
 		}
-		.onChange(of: selection){ oldValue, newValue in
+		.onChange(of: selection) { oldValue, newValue in
 			previousTab = oldValue
-			
+
 		}
 	}
-	
+
 	@ViewBuilder
-	func TabItemView (_ tab: Tab, inActiveWidth: CGFloat) -> some View{
+	func TabItemView(_ tab: Tab, inActiveWidth: CGFloat) -> some View {
 		let isActive = selection == tab
-		HStack (spacing: isActive ? 6 : 0 ){
+		HStack(spacing: isActive ? 6 : 0) {
 			Image(systemName: tab.symbol)
 				.font(.body)
-				.frame(width:20)
+				.frame(width: 20)
 				.zIndex(1)
 			Text(tab.title)
 				.font(.callout)
@@ -70,25 +72,25 @@ struct MailTabBar<Tab: MailTabItem>: View {
 				.onGeometryChange(for: CGSize.self) {
 					$0.size
 				} action: { newValue in
-					tabTitleSize [tab] = newValue
+					tabTitleSize[tab] = newValue
 				}
 				.frame(width: isActive ? nil : 0, alignment: .leading)
-				.animation(animation.speed(isActive ? 1 : 2.5)){ content in
+				.animation(animation.speed(isActive ? 1 : 2.5)) { content in
 					content
-					.opacity(isActive ? 1 : 0)
+						.opacity(isActive ? 1 : 0)
 				}
-			
+
 		}
 		.foregroundStyle(isActive ? tab.activeTint : .gray)
 		.padding(.horizontal, isActive ? 20 : 0)
 		.frame(maxHeight: .infinity)
 		.frame(width: isActive ? nil : inActiveWidth)
-		.background{
-			ZStack{
+		.background {
+			ZStack {
 				Capsule()
 					.fill(.fill)
 					.opacity(isActive ? 0 : 1)
-				
+
 				Capsule()
 					.fill(tab.activeBackground)
 					.opacity(isActive ? 1 : 0)
@@ -98,41 +100,41 @@ struct MailTabBar<Tab: MailTabItem>: View {
 		.contentShape(.capsule)
 		.geometryGroup()
 		.onTapGesture {
-			
-			if let lastTab = allTabs.last, let previousTab, selection == tab{
-				if selection == lastTab{
+
+			if let lastTab = allTabs.last, let previousTab, selection == tab {
+				if selection == lastTab {
 					selection = previousTab
-				} else{
+				} else {
 					selection = lastTab
 				}
-				
-			} else{
+
+			} else {
 				selection = tab
-				
+
 			}
 		}
 	}
-	
-	var toggleGesture: some Gesture{
+
+	var toggleGesture: some Gesture {
 		DragGesture(minimumDistance: 20)
-			.onEnded{ value in
+			.onEnded { value in
 				let xTransition = value.translation.width
-				guard abs(xTransition) > 40 else {return}
+				guard abs(xTransition) > 40 else { return }
 				if xTransition > 0 {
-					guard let previousTab else {return}
+					guard let previousTab else { return }
 					selection = previousTab
-				} else{
-					
+				} else {
+
 				}
-				
+
 			}
 	}
-	
-	var allTabs: [Tab.AllCases.Element]{
+
+	var allTabs: [Tab.AllCases.Element] {
 		Array(Tab.allCases.prefix(4))
 	}
-	
-	var animation: Animation{
+
+	var animation: Animation {
 		.interpolatingSpring(duration: 0.3, bounce: 0, initialVelocity: 0)
 	}
 }

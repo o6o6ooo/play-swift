@@ -79,18 +79,19 @@ struct ContentView: View {
 			}
 
 		}
-		.background(TabBarExtractor { tabBar = $0 } )
+		.background(TabBarExtractor { tabBar = $0 })
 		.compositingGroup()
-		.onChange(of: isFABExpanded){ oldValue, newValue in
+		.onChange(of: isFABExpanded) { oldValue, newValue in
 			animateFABIcon()
 		}
 	}
-	private func animateFABIcon(){
+	private func animateFABIcon() {
 		let fabImageViews = (tabBar?.subviews(type: UIImageView.self) ?? [])
-			.filter({$0.description.contains("plus")})
+			.filter({ $0.description.contains("plus") })
 		for fabImageView in fabImageViews {
-			let trasform: CGAffineTransform = isFABExpanded ? .init(rotationAngle: 45 * .pi / 180) : .identity
-			UIView.animate(withDuration: 0.2){
+			let trasform: CGAffineTransform =
+				isFABExpanded ? .init(rotationAngle: 45 * .pi / 180) : .identity
+			UIView.animate(withDuration: 0.2) {
 				fabImageView.layer.setAffineTransform(trasform)
 			}
 
@@ -182,7 +183,7 @@ struct TabOverlayModifier<ViewContent: View>: ViewModifier {
 }
 
 struct TabBarExtractor: UIViewRepresentable {
-	var resurt: (UITabBar) -> ()
+	var resurt: (UITabBar) -> Void
 	func makeUIView(context: Context) -> UIView {
 		let view = UIView()
 		view.backgroundColor = .clear
@@ -200,10 +201,10 @@ struct TabBarExtractor: UIViewRepresentable {
 	}
 }
 
-fileprivate extension UIView{
-	func subviews<T:UIView>(type: T.Type) -> [T]{
-		subviews.compactMap{ $0 as? T } +
-		subviews.flatMap{ $0.subviews(type: type)}
+extension UIView {
+	fileprivate func subviews<T: UIView>(type: T.Type) -> [T] {
+		subviews.compactMap { $0 as? T }
+			+ subviews.flatMap { $0.subviews(type: type) }
 	}
 }
 
