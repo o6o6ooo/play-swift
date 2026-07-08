@@ -2,6 +2,9 @@
 <Workspace
    version = "1.0">
    <FileRef
+      location = "group:CustomTabBar/HCalendarView/HCalendarView.xcodeproj">
+   </FileRef>
+   <FileRef
       location = "group:CustomTabBar/CustomTabBar/CustomTabBar.xcodeproj">
    </FileRef>
    <FileRef
