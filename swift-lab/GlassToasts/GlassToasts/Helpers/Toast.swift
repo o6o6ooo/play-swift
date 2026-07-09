@@ -10,6 +10,7 @@ import SwiftUI
 struct ToastRootView<Content: View>: View {
 	@ViewBuilder var content: Content
 	@State private var activeToast: Toast?
+	@State private var toastDismissWorkItem: DispatchWorkItem?
 	var body: some View {
 		content
 			.frame(maxWidth: .infinity, maxHeight: .infinity)
@@ -26,6 +27,7 @@ struct ToastRootView<Content: View>: View {
 					withAnimation(animation) {
 						activeToast = toast
 					}
+					scheduleDismiss(for: toast)
 					return
 				}
 
@@ -35,10 +37,15 @@ struct ToastRootView<Content: View>: View {
 				) {
 					activeToast = nil
 				} completion: {
+					toastDismissWorkItem?.cancel()
 					withAnimation(animation) {
 						activeToast = toast
 					}
+					scheduleDismiss(for: toast)
 				}
+			}
+			.environment(\.dismissToast){
+				dismiss()
 			}
 	}
 	@ViewBuilder
@@ -73,12 +80,31 @@ struct ToastRootView<Content: View>: View {
 		.contentShape(.capsule)
 		.glassEffect(.regular, in: .capsule)
 		.padding(.horizontal, 15)
+		.offset(y: toast.placementOffset)
+		.gesture(
+			DragGesture()
+				.onEnded{ value in
+					let endTransition = value.translation.height
+					if endTransition > 20{
+						dismiss()
+					}
+				}
+		)
 		.transition(.offset(y: toast.transitionOffset))
 	}
 	private func dismiss() {
 		withAnimation(animation) {
 			activeToast = nil
 		}
+		toastDismissWorkItem?.cancel()
+		toastDismissWorkItem = nil
+	}
+	private func scheduleDismiss(for toast: Toast) {
+		toastDismissWorkItem?.cancel()
+		let toastDismissWorkItem = DispatchWorkItem(block: dismiss)
+		self.toastDismissWorkItem = toastDismissWorkItem
+		let duration = TimeInterval(max(toast.duration, 1))
+		DispatchQueue.main.asyncAfter(deadline: .now() + duration, execute: toastDismissWorkItem)
 	}
 	private let animation: Animation = .interpolatingSpring(
 		duration: 0.35,
@@ -101,6 +127,7 @@ struct Toast: Identifiable {
 
 extension EnvironmentValues {
 	@Entry var showToast: (Toast) -> Void = { _ in }
+	@Entry var dismissToast: () -> () = { }
 }
 
 #Preview {
