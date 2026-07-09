@@ -2,7 +2,10 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "group:CustomTabBar/HCalendarView/HCalendarView.xcodeproj">
+      location = "group:GlassToasts/GlassToasts.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:HCalendarView/HCalendarView.xcodeproj">
    </FileRef>
    <FileRef
       location = "group:CustomTabBar/CustomTabBar/CustomTabBar.xcodeproj">
