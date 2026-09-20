@@ -1,9 +1,9 @@
 import SwiftUI
 
-struct GlassContainerComparisonView: View {
+struct GlassContainerView: View {
     static let metadata = CataloguePage(
         id: "glass-container-comparison",
-        title: "Glass Container Comparison",
+        title: "Glass Container",
         tags: ["Liquid Glass", "Materials", "iOS 26"],
         summary: "Compare clear and regular Liquid Glass with all five SwiftUI material thicknesses on large cards.",
         symbol: "rectangle.stack.fill",
@@ -151,7 +151,7 @@ private struct ComparisonBackdrop: View {
     }
 }
 
-private extension GlassContainerComparisonView {
+private extension GlassContainerView {
     static let sampleCode = """
     import SwiftUI
 

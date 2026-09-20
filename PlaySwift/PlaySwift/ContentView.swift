@@ -181,7 +181,7 @@ private struct CatalogueDestinationView: View {
         case .liquidGlassToolbars:
             LiquidGlassToolbarsView(isFavourite: isFavourite, toggleFavourite: toggleFavourite)
         case .glassContainerComparison:
-            GlassContainerComparisonView(isFavourite: isFavourite, toggleFavourite: toggleFavourite)
+            GlassContainerView(isFavourite: isFavourite, toggleFavourite: toggleFavourite)
         case .newNavigationPatterns:
             NewNavigationPatternsView(isFavourite: isFavourite, toggleFavourite: toggleFavourite)
         }

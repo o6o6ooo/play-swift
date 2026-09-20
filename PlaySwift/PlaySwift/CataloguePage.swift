@@ -88,7 +88,7 @@ extension CatalogueSection {
             pages: [
                 LiquidGlassButtonView.metadata,
                 LiquidGlassToolbarsView.metadata,
-                GlassContainerComparisonView.metadata,
+                GlassContainerView.metadata,
                 NewNavigationPatternsView.metadata
             ]
         )
