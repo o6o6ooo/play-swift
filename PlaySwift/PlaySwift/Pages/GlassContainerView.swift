@@ -153,113 +153,46 @@ private struct ComparisonBackdrop: View {
 
 private extension GlassContainerView {
     static let sampleCode = """
-    import SwiftUI
+    ComparisonCard(
+        title: "Clear Glass",
+        modifier: ".glassEffect(.clear, in: .rect)"
+    )
+    .glassEffect(.clear, in: .rect(cornerRadius: 28))
 
-    struct GlassContainerComparison: View {
-        var body: some View {
-            VStack(spacing: 18) {
-                ComparisonCard(
-                    title: "Clear Glass",
-                    modifier: ".glassEffect(.clear, in: .rect)"
-                )
-                .glassEffect(.clear, in: .rect(cornerRadius: 28))
+    ComparisonCard(
+        title: "Regular Glass",
+        modifier: ".glassEffect(.regular, in: .rect)"
+    )
+    .glassEffect(.regular, in: .rect(cornerRadius: 28))
 
-                ComparisonCard(
-                    title: "Regular Glass",
-                    modifier: ".glassEffect(.regular, in: .rect)"
-                )
-                .glassEffect(.regular, in: .rect(cornerRadius: 28))
+    ComparisonCard(
+        title: "Ultra Thin Material",
+        modifier: ".background(.ultraThinMaterial)"
+    )
+    .background(.ultraThinMaterial, in: .rect(cornerRadius: 28))
 
-                ComparisonCard(
-                    title: "Ultra Thin Material",
-                    modifier: ".background(.ultraThinMaterial)"
-                )
-                .background(.ultraThinMaterial, in: .rect(cornerRadius: 28))
+    ComparisonCard(
+        title: "Thin Material",
+        modifier: ".background(.thinMaterial)"
+    )
+    .background(.thinMaterial, in: .rect(cornerRadius: 28))
 
-                ComparisonCard(
-                    title: "Thin Material",
-                    modifier: ".background(.thinMaterial)"
-                )
-                .background(.thinMaterial, in: .rect(cornerRadius: 28))
+    ComparisonCard(
+        title: "Regular Material",
+        modifier: ".background(.regularMaterial)"
+    )
+    .background(.regularMaterial, in: .rect(cornerRadius: 28))
 
-                ComparisonCard(
-                    title: "Regular Material",
-                    modifier: ".background(.regularMaterial)"
-                )
-                .background(.regularMaterial, in: .rect(cornerRadius: 28))
+    ComparisonCard(
+        title: "Thick Material",
+        modifier: ".background(.thickMaterial)"
+    )
+    .background(.thickMaterial, in: .rect(cornerRadius: 28))
 
-                ComparisonCard(
-                    title: "Thick Material",
-                    modifier: ".background(.thickMaterial)"
-                )
-                .background(.thickMaterial, in: .rect(cornerRadius: 28))
-
-                ComparisonCard(
-                    title: "Ultra Thick Material",
-                    modifier: ".background(.ultraThickMaterial)"
-                )
-                .background(.ultraThickMaterial, in: .rect(cornerRadius: 28))
-            }
-            .padding(16)
-            .background {
-                ComparisonBackdrop()
-            }
-            .clipShape(.rect(cornerRadius: 32))
-        }
-    }
-
-    private struct ComparisonCard: View {
-        let title: String
-        let modifier: String
-
-        var body: some View {
-            VStack(alignment: .leading, spacing: 10) {
-                Image(systemName: "sparkles.rectangle.stack.fill")
-                    .font(.title2)
-
-                Spacer(minLength: 28)
-
-                Text(title)
-                    .font(.title3.weight(.bold))
-
-                Text(modifier)
-                    .font(.caption.monospaced())
-                    .foregroundStyle(.white.opacity(0.8))
-            }
-            .foregroundStyle(.white)
-            .padding(24)
-            .frame(maxWidth: .infinity, minHeight: 168, alignment: .leading)
-        }
-    }
-
-    private struct ComparisonBackdrop: View {
-        var body: some View {
-            ZStack {
-                LinearGradient(
-                    colors: [.indigo, .blue, .purple],
-                    startPoint: .topLeading,
-                    endPoint: .bottomTrailing
-                )
-
-                Circle()
-                    .fill(.cyan)
-                    .frame(width: 210, height: 210)
-                    .blur(radius: 8)
-                    .offset(x: 120, y: -260)
-
-                Circle()
-                    .fill(.pink)
-                    .frame(width: 240, height: 240)
-                    .blur(radius: 12)
-                    .offset(x: -130, y: 150)
-
-                Image(systemName: "circle.hexagongrid.fill")
-                    .font(.system(size: 190))
-                    .foregroundStyle(.white.opacity(0.18))
-                    .rotationEffect(.degrees(-12))
-                    .offset(x: 100, y: 330)
-            }
-        }
-    }
+    ComparisonCard(
+        title: "Ultra Thick Material",
+        modifier: ".background(.ultraThickMaterial)"
+    )
+    .background(.ultraThickMaterial, in: .rect(cornerRadius: 28))
     """
 }
