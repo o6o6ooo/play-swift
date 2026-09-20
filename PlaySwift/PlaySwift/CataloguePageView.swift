@@ -15,8 +15,11 @@ struct CataloguePageContainer<Content: View>: View {
             .padding(.vertical, 20)
             .padding(.horizontal, 20)
         }
+        // Keep the fixed controls legible without the stronger iOS 27 automatic bar boundary.
+        .scrollEdgeEffectStyle(.soft, for: .top)
         .navigationTitle(page.title)
         .navigationBarTitleDisplayMode(.inline)
+        .toolbarVisibility(.visible, for: .navigationBar)
         .toolbar {
             FavouriteToolbarButton(isFavourite: isFavourite, action: toggleFavourite)
         }

@@ -42,13 +42,18 @@ private struct DiscoverView: View {
             ScrollView {
                 // LazyVStack keeps off-screen sections lightweight as the catalogue grows.
                 LazyVStack(alignment: .leading, spacing: 28) {
+                    Text("Discover")
+                        .font(.largeTitle.weight(.bold))
+                        .padding(.horizontal, 20)
+
                     ForEach(sections) { section in
                         CatalogueSectionView(section: section, favouriteIDs: $favouriteIDs)
                     }
                 }
                 .padding(.vertical, 18)
             }
-            .navigationTitle("Discover")
+            // The title belongs to the scroll content, leaving no persistent chrome on this root screen.
+            .toolbarVisibility(.hidden, for: .navigationBar)
             .background(.background)
         }
     }
