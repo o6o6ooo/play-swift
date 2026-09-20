@@ -83,8 +83,8 @@ extension CatalogueSection {
             ]
         ),
         CatalogueSection(
-            id: "ios-26-lab",
-            title: "iOS 26 Lab",
+            id: "explore-liquid-glass",
+            title: "Explore Liquid Glass",
             pages: [
                 LiquidGlassButtonView.metadata,
                 LiquidGlassToolbarsView.metadata,
