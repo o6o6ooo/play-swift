@@ -7,107 +7,136 @@
       "layers" : [
         {
           "fill" : {
-            "solid" : "srgb:0.98824,0.84314,0.27451,1.00000"
+            "solid" : "srgb:0.38039,0.33333,0.96078,1.00000"
           },
           "glass" : true,
-          "image-name" : "circle.png",
-          "name" : "circle",
+          "image-name" : "light blue 2.png",
+          "name" : "indigo",
           "position" : {
-            "scale" : 0.5,
+            "scale" : 1,
             "translation-in-points" : [
-              0,
-              -216
+              250,
+              232.5
             ]
           }
         },
         {
           "fill" : {
-            "solid" : "srgb:0.96471,0.54510,0.12157,1.00000"
+            "solid" : "srgb:1.00000,0.55294,0.15686,1.00000"
           },
           "glass" : true,
-          "image-name" : "circle.png",
-          "name" : "circle",
+          "image-name" : "light blue 2.png",
+          "name" : "orange",
           "position" : {
-            "scale" : 0.5,
+            "scale" : 1,
             "translation-in-points" : [
-              0,
-              0
+              2,
+              232.5
             ]
           }
         },
         {
           "fill" : {
-            "solid" : "srgb:0.00000,0.34118,0.72157,1.00000"
+            "solid" : "srgb:0.00000,0.75294,0.90980,1.00000"
           },
           "glass" : true,
-          "hidden" : false,
-          "image-name" : "circle.png",
-          "name" : "circle",
+          "image-name" : "light blue 2.png",
+          "name" : "cyan",
           "position" : {
-            "scale" : 0.5,
+            "scale" : 1,
             "translation-in-points" : [
-              192,
-              105
+              250,
+              -232.5
             ]
           }
         },
         {
           "fill" : {
-            "solid" : "srgb:0.86667,0.15294,0.15686,1.00000"
+            "solid" : "srgb:0.00000,0.76471,0.81569,1.00000"
           },
           "glass" : true,
-          "image-name" : "circle.png",
-          "name" : "circle",
+          "image-name" : "light blue 2.png",
+          "name" : "teal",
           "position" : {
-            "scale" : 0.5,
+            "scale" : 1,
             "translation-in-points" : [
-              0,
-              200
+              2,
+              7.5
             ]
           }
         },
         {
           "fill" : {
-            "solid" : "srgb:0.00784,0.44314,0.27059,1.00000"
+            "solid" : "srgb:0.00000,0.78431,0.70196,1.00000"
           },
           "glass" : true,
-          "image-name" : "circle.png",
-          "name" : "circle",
+          "image-name" : "light blue 2.png",
+          "name" : "mint",
           "position" : {
-            "scale" : 0.5,
+            "scale" : 1,
             "translation-in-points" : [
-              -183,
-              114
+              -250,
+              232.5
             ]
           }
         },
         {
           "fill" : {
-            "solid" : "srgb:0.01176,0.56471,0.34902,1.00000"
+            "solid" : "srgb:1.00000,0.21961,0.23529,1.00000"
           },
           "glass" : true,
-          "image-name" : "circle.png",
-          "name" : "circle",
+          "image-name" : "light blue 2.png",
+          "name" : "red",
           "position" : {
-            "scale" : 0.5,
+            "scale" : 1,
             "translation-in-points" : [
-              192,
-              -90
+              -250,
+              7.5
             ]
           }
         },
         {
           "fill" : {
-            "solid" : "srgb:0.15294,0.47451,0.85490,1.00000"
+            "solid" : "srgb:0.20392,0.78039,0.34902,1.00000"
           },
           "glass" : true,
-          "image-name" : "circle.png",
-          "name" : "circle",
+          "image-name" : "light blue 2.png",
+          "name" : "green",
           "position" : {
-            "scale" : 0.5,
+            "scale" : 1,
             "translation-in-points" : [
-              -183,
-              -90
+              250,
+              7.5
+            ]
+          }
+        },
+        {
+          "fill" : {
+            "solid" : "srgb:1.00000,0.80000,0.00000,1.00000"
+          },
+          "glass" : true,
+          "image-name" : "light blue 2.png",
+          "name" : "yellow",
+          "position" : {
+            "scale" : 1,
+            "translation-in-points" : [
+              2,
+              -232.5
+            ]
+          }
+        },
+        {
+          "fill" : {
+            "solid" : "extended-srgb:0.00000,0.53333,1.00000,1.00000"
+          },
+          "glass" : true,
+          "image-name" : "light blue 2.png",
+          "name" : "blue",
+          "position" : {
+            "scale" : 1,
+            "translation-in-points" : [
+              -250,
+              -232.5
             ]
           }
         }
