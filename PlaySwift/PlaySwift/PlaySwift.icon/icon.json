@@ -4,63 +4,18 @@
   },
   "groups" : [
     {
+      "hidden" : false,
       "layers" : [
         {
           "fill" : {
-            "solid" : "srgb:0.38039,0.33333,0.96078,1.00000"
+            "solid" : "srgb:0.20392,0.78039,0.34902,1.00000"
           },
-          "glass" : true,
-          "image-name" : "light blue 2.png",
-          "name" : "indigo",
+          "image-name" : "green.png",
+          "name" : "green",
           "position" : {
             "scale" : 1,
             "translation-in-points" : [
               250,
-              232.5
-            ]
-          }
-        },
-        {
-          "fill" : {
-            "solid" : "srgb:1.00000,0.55294,0.15686,1.00000"
-          },
-          "glass" : true,
-          "image-name" : "light blue 2.png",
-          "name" : "orange",
-          "position" : {
-            "scale" : 1,
-            "translation-in-points" : [
-              2,
-              232.5
-            ]
-          }
-        },
-        {
-          "fill" : {
-            "solid" : "srgb:0.00000,0.75294,0.90980,1.00000"
-          },
-          "glass" : true,
-          "image-name" : "light blue 2.png",
-          "name" : "cyan",
-          "position" : {
-            "scale" : 1,
-            "translation-in-points" : [
-              250,
-              -232.5
-            ]
-          }
-        },
-        {
-          "fill" : {
-            "solid" : "srgb:0.00000,0.76471,0.81569,1.00000"
-          },
-          "glass" : true,
-          "image-name" : "light blue 2.png",
-          "name" : "teal",
-          "position" : {
-            "scale" : 1,
-            "translation-in-points" : [
-              2,
               7.5
             ]
           }
@@ -69,8 +24,7 @@
           "fill" : {
             "solid" : "srgb:0.00000,0.78431,0.70196,1.00000"
           },
-          "glass" : true,
-          "image-name" : "light blue 2.png",
+          "image-name" : "green.png",
           "name" : "mint",
           "position" : {
             "scale" : 1,
@@ -84,8 +38,7 @@
           "fill" : {
             "solid" : "srgb:1.00000,0.21961,0.23529,1.00000"
           },
-          "glass" : true,
-          "image-name" : "light blue 2.png",
+          "image-name" : "green.png",
           "name" : "red",
           "position" : {
             "scale" : 1,
@@ -97,16 +50,43 @@
         },
         {
           "fill" : {
-            "solid" : "srgb:0.20392,0.78039,0.34902,1.00000"
+            "solid" : "srgb:0.38039,0.33333,0.96078,1.00000"
           },
-          "glass" : true,
-          "image-name" : "light blue 2.png",
-          "name" : "green",
+          "image-name" : "green.png",
+          "name" : "indigo",
           "position" : {
             "scale" : 1,
             "translation-in-points" : [
               250,
-              7.5
+              232.5
+            ]
+          }
+        },
+        {
+          "fill" : {
+            "solid" : "srgb:1.00000,0.55294,0.15686,1.00000"
+          },
+          "image-name" : "green.png",
+          "name" : "orange",
+          "position" : {
+            "scale" : 1,
+            "translation-in-points" : [
+              0,
+              232.5
+            ]
+          }
+        },
+        {
+          "fill" : {
+            "solid" : "srgb:0.00000,0.75294,0.90980,1.00000"
+          },
+          "image-name" : "green.png",
+          "name" : "cyan",
+          "position" : {
+            "scale" : 1,
+            "translation-in-points" : [
+              250,
+              -232.5
             ]
           }
         },
@@ -114,8 +94,7 @@
           "fill" : {
             "solid" : "srgb:1.00000,0.80000,0.00000,1.00000"
           },
-          "glass" : true,
-          "image-name" : "light blue 2.png",
+          "image-name" : "green.png",
           "name" : "yellow",
           "position" : {
             "scale" : 1,
@@ -129,8 +108,7 @@
           "fill" : {
             "solid" : "extended-srgb:0.00000,0.53333,1.00000,1.00000"
           },
-          "glass" : true,
-          "image-name" : "light blue 2.png",
+          "image-name" : "green.png",
           "name" : "blue",
           "position" : {
             "scale" : 1,
@@ -139,15 +117,30 @@
               -232.5
             ]
           }
+        },
+        {
+          "fill" : {
+            "solid" : "srgb:0.00000,0.76471,0.81569,1.00000"
+          },
+          "image-name" : "green.png",
+          "name" : "teal",
+          "position" : {
+            "scale" : 1,
+            "translation-in-points" : [
+              2,
+              7.5
+            ]
+          }
         }
       ],
+      "name" : "New",
       "shadow" : {
         "kind" : "neutral",
         "opacity" : 0.5
       },
       "translucency" : {
         "enabled" : true,
-        "value" : 0.5
+        "value" : 0.3
       }
     }
   ],
