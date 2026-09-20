@@ -36,6 +36,7 @@ enum CatalogueDestination {
     case walletCardStack
     case liquidGlassButtons
     case liquidGlassToolbars
+    case glassContainerComparison
     case newNavigationPatterns
 }
 
@@ -87,6 +88,7 @@ extension CatalogueSection {
             pages: [
                 LiquidGlassButtonView.metadata,
                 LiquidGlassToolbarsView.metadata,
+                GlassContainerComparisonView.metadata,
                 NewNavigationPatternsView.metadata
             ]
         )
