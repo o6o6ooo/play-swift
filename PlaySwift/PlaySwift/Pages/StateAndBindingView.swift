@@ -7,7 +7,7 @@ struct StateAndBindingView: View {
         tags: ["Basic", "State", "Binding"],
         summary: "Learn how @State stores local view data and @Binding lets a child view edit that data.",
         symbol: "arrow.left.arrow.right.square.fill",
-        colour: Color(hex: 0xFF9500),
+        colour: .yellow,
         destination: .stateAndBinding
     )
 

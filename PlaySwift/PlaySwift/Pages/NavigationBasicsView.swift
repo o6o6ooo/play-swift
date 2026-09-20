@@ -7,7 +7,7 @@ struct NavigationBasicsView: View {
         tags: ["Basic", "Navigation", "SwiftUI"],
         summary: "Learn how NavigationStack, NavigationLink, navigation titles, and value-based destinations build a SwiftUI navigation flow.",
         symbol: "point.topleft.down.curvedto.point.bottomright.up",
-        colour: Color(hex: 0x5856D6),
+        colour: .blue,
         destination: .navigationBasics
     )
 

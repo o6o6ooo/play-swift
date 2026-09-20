@@ -7,7 +7,7 @@ struct TogglesAndSwitchesView: View {
         tags: ["Controls", "Toggle"],
         summary: "Inspect tinting, labels, disabled states, and settings-style toggle rows.",
         symbol: "switch.2",
-        colour: Color(hex: 0x32ADE6),
+        colour: .cyan,
         destination: .togglesAndSwitches
     )
 

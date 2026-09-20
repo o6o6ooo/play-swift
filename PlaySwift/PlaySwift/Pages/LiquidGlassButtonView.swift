@@ -7,7 +7,7 @@ struct LiquidGlassButtonView: View {
         tags: ["Liquid Glass", "Buttons", "iOS 26"],
         summary: "Compare iOS 26 Liquid Glass button decoration styles and copy the matching SwiftUI code.",
         symbol: "sparkles",
-        colour: Color(hex: 0x007AFF),
+        colour: .blue,
         destination: .liquidGlassButtons
     )
 

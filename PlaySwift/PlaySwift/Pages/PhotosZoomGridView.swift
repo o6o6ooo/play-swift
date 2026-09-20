@@ -7,7 +7,7 @@ struct PhotosZoomGridView: View {
         tags: ["Apple Inspired", "Photos"],
         summary: "Build a photo grid that zooms into a detail view with gesture-driven dismissal.",
         symbol: "photo.on.rectangle.angled",
-        colour: Color(hex: 0x5AC8FA),
+        colour: .cyan,
         destination: .photosZoomGrid
     )
 

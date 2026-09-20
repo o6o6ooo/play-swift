@@ -7,7 +7,7 @@ struct GlassContainerView: View {
         tags: ["Liquid Glass", "Materials", "iOS 26"],
         summary: "Compare clear and regular Liquid Glass with all five SwiftUI material thicknesses on large cards.",
         symbol: "rectangle.stack.fill",
-        colour: Color(hex: 0xAF52DE),
+        colour: .cyan,
         destination: .glassContainerComparison
     )
 

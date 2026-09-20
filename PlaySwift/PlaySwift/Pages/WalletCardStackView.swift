@@ -7,7 +7,7 @@ struct WalletCardStackView: View {
         tags: ["Apple Inspired", "Wallet"],
         summary: "Experiment with stacked cards, depth, scrolling, and tap-to-expand interactions.",
         symbol: "creditcard.fill",
-        colour: Color(hex: 0xFFCC00),
+        colour: .yellow,
         destination: .walletCardStack
     )
 

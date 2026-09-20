@@ -7,7 +7,7 @@ struct ButtonBasicsView: View {
         tags: ["Basic", "Buttons", "SwiftUI"],
         summary: "Learn the core Button shapes: text buttons, label buttons, roles, disabled state, bordered styles, and control sizes.",
         symbol: "button.programmable",
-        colour: Color(hex: 0xFF9500),
+        colour: .yellow,
         destination: .buttonBasics
     )
 

@@ -7,7 +7,7 @@ struct SwiftUILayoutBasicsView: View {
         tags: ["Basic", "Layout", "SwiftUI"],
         summary: "Learn how VStack, HStack, ZStack, Spacer, padding, and frame work together to shape a SwiftUI screen.",
         symbol: "square.stack.3d.up.fill",
-        colour: Color(hex: 0x007AFF),
+        colour: .blue,
         destination: .swiftUILayoutBasics
     )
 

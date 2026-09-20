@@ -7,7 +7,7 @@ struct MapsBottomSheetView: View {
         tags: ["Apple Inspired", "Maps"],
         summary: "Explore detents, grabbers, search panels, and floating controls in a Maps-inspired layout.",
         symbol: "map.fill",
-        colour: Color(hex: 0x34C759),
+        colour: .green,
         destination: .mapsBottomSheet
     )
 

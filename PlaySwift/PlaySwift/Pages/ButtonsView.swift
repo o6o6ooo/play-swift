@@ -7,7 +7,7 @@ struct ButtonsView: View {
         tags: ["Components", "Buttons"],
         summary: "Compare prominent, bordered, destructive, menu-backed, and animated button styles.",
         symbol: "button.programmable",
-        colour: Color(hex: 0x007AFF),
+        colour: .blue,
         destination: .buttons
     )
 

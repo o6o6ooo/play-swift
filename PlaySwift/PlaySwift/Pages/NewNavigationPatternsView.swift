@@ -7,7 +7,7 @@ struct NewNavigationPatternsView: View {
         tags: ["Navigation", "iOS 26"],
         summary: "Prototype current tab, toolbar, and split-view ideas as the platform evolves.",
         symbol: "sidebar.leading",
-        colour: Color(hex: 0x5856D6),
+        colour: .blue,
         destination: .newNavigationPatterns
     )
 

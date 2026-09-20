@@ -7,7 +7,7 @@ struct PickersAndMenusView: View {
         tags: ["Controls", "Picker", "Menu"],
         summary: "Try segmented controls, inline pickers, wheel pickers, menus, and selection states.",
         symbol: "filemenu.and.selection",
-        colour: Color(hex: 0xFF9500),
+        colour: .yellow,
         destination: .pickersAndMenus
     )
 

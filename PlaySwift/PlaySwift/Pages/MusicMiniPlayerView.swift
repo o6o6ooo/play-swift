@@ -7,7 +7,7 @@ struct MusicMiniPlayerView: View {
         tags: ["Apple Inspired", "Music"],
         summary: "Recreate the compact player, queue entry point, and expansion transition.",
         symbol: "music.note.list",
-        colour: Color(hex: 0xFF2D55),
+        colour: .red,
         destination: .musicMiniPlayer
     )
 

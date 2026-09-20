@@ -7,7 +7,7 @@ struct LiquidGlassToolbarsView: View {
         tags: ["Liquid Glass", "Toolbars", "iOS 26"],
         summary: "Apply Liquid Glass button decoration to standard SwiftUI toolbar actions.",
         symbol: "wrench.and.screwdriver.fill",
-        colour: Color(hex: 0x5856D6),
+        colour: .blue,
         destination: .liquidGlassToolbars
     )
 

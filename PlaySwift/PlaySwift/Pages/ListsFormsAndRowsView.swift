@@ -7,7 +7,7 @@ struct ListsFormsAndRowsView: View {
         tags: ["Lists", "Layout", "Form"],
         summary: "Study grouped lists, form sections, swipe actions, and disclosure patterns.",
         symbol: "list.bullet.rectangle.fill",
-        colour: Color(hex: 0x5856D6),
+        colour: .blue,
         destination: .listsFormsAndRows
     )
 

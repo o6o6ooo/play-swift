@@ -7,7 +7,7 @@ struct MatchedGeometryCardsView: View {
         tags: ["Animations", "Matched Geometry"],
         summary: "Open compact cards into detail screens with a smooth shared-element transition.",
         symbol: "rectangle.stack.fill",
-        colour: Color(hex: 0xFF2D55),
+        colour: .red,
         destination: .matchedGeometryCards
     )
 

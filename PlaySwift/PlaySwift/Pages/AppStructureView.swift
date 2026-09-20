@@ -7,7 +7,7 @@ struct AppStructureView: View {
         tags: ["Basic", "SwiftUI", "App"],
         summary: "Learn the smallest useful shape of a SwiftUI app: App, WindowGroup, ContentView, and where navigation usually begins.",
         symbol: "app.connected.to.app.below.fill",
-        colour: Color(hex: 0x34C759),
+        colour: .green,
         destination: .appStructure
     )
 
